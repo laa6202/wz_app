@@ -1,5 +1,6 @@
-#CC=arm-linux-gcc
-CC=gcc
+CC=arm-linux-gcc
+#CC=gcc 
+FLAG= -std=c99
 TAR=wz_app
 SRC=main.c init.c action.c \
 		config_analyze.c	\
@@ -16,7 +17,7 @@ $(TAR) : $(OBJ)
 	$(CC) -o $@ $^
 
 $(OBJ) : $(SRC)
-	$(CC) -c $^
+	$(CC) $(FLAG) -c $^
 
 clean : 
 	rm -rf $(TAR) $(OBJ)

@@ -85,7 +85,7 @@ int SendSmallPackage(CFG cfg,SPKG spkg){
 int  PushWZ2L(pLPKG  plpkg, WZPKG wzpkg){
 	int k;
 	int i;
-	bzero(plpkg,8192);
+	memset(plpkg,0,8192);
 	for(i=0;i<500;i++){
 		plpkg->load[8*i] =
 			(wzpkg.load[i*9+1]<<8) + (wzpkg.load[i*9+2]);
@@ -102,8 +102,33 @@ int  PushWZ2L(pLPKG  plpkg, WZPKG wzpkg){
 
 
 int  PushL2S(pSPKG  pspkg, LPKG lpkg){
-	SPKG spkg;
+	UCHAR data[8192];
+	memset(data,0,8192);
+	for(int i=0;i<4000;i++){
+		data[i*2] = (lpkg.load[i] & 0xff00) >> 8;
+		data[i*2+1] = (lpkg.load[i] & 0xff);
+	}
+	for(int i=0;i<80;i++){
+		data[i*2+4000] = (lpkg.expr[i] & 0xff00) >> 8;
+		data[i*2+4001] = (lpkg.expr[i] & 0xff);
+	}
 
+	data[8184] = (lpkg.tail.w12 & 0xff00) >> 8;
+	data[8185] = lpkg.tail.w12 & 0xff;
+	data[8196] = (lpkg.tail.w13 & 0xff00) >> 8;
+	data[8197] = lpkg.tail.w13 & 0xff;
+	data[8188] = (lpkg.tail.w14 & 0xff00) >> 8;
+	data[8189] = lpkg.tail.w14 & 0xff;
+	data[8190] = (lpkg.tail.w15 & 0xff00) >> 8;
+	data[8191] = lpkg.tail.w15 & 0xff;
+
+	memset(pspkg,0,sizeof(SPKG));
+	for (int i=0;i<28;i++){
+		pspkg->head[i] = 0;
+	}
+	for(int i=0;i<1024;i++){
+		pspkg->load[i] = data[i]; 
+	}	
 	return 0;
 }
 
@@ -135,9 +160,9 @@ int SendDS7(CFG cfg,WZPKG wzpkg){
 //	SPKG spkg = InitSmallPackage();
 	LPKG lpkg;
 	PushWZ2L(&lpkg,wzpkg1);
-//	SPKG pspkg[8];
-//	PushL2S(&pspkg,plpkg[0]);
-//	SendSmallPackage(pspkg[0]);
+	SPKG spkg;
+	PushL2S(&spkg,lpkg);
+	SendSmallPackage(cfg,spkg);
 
 	return 0;
 }

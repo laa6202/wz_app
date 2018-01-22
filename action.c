@@ -9,6 +9,7 @@ int action(CFG cfg){
 	printf("...action...\n");
 	WZPKG wzpkg;
 	
+
 	if(1)
 		PspiRead(&wzpkg);
 
