@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include "send_DS7.h"
+
+
+WZPKG InitWZPackage(int lenSample){
+	WZPKG wzpkg;
+	int lenHead = 12;
+	int lenLoad = 9 * lenSample;
+	int lenWZPKG = lenLoad + lenHead + 2;
+	int i;
+	int k=0;
+
+	wzpkg.lenLoad = lenLoad;
+	wzpkg.lenTail = 0;
+	wzpkg.head[0] = 0x51;
+	wzpkg.head[1] = 0x01;
+	wzpkg.head[2] = 0x0;
+	wzpkg.head[3] = 0x0;
+	for(i=4;i<12;i++)
+		wzpkg.head[i] = 0x0;
+	for(i=0;i<lenSample;i++){
+		k = i * 9;
+		//wzpkg.load[k] = (i & 0xff0000) >> 16;
+		//wzpkg.load[k+1] =	(i & 0xff00) >> 8;
+		//wzpkg.load[k+2] = (i & 0xff);
+		wzpkg.load[k] 	= (i & 0xff);
+		wzpkg.load[k+1] =	(i & 0xff);
+		wzpkg.load[k+2] = (i & 0xff);
+		wzpkg.load[k+3] = 0x22;
+		wzpkg.load[k+4] = 0x22;
+		wzpkg.load[k+5] = 0x22;
+		wzpkg.load[k+6] = 0x33;
+		wzpkg.load[k+7] = 0x33;
+		wzpkg.load[k+8] = 0x33;
+	}
+	unsigned int crc = 0;
+	for(i=0;i<lenHead;i++)
+		crc = crc + wzpkg.head[i];
+	for(i=0;i<lenLoad;i++)
+		crc = crc + wzpkg.load[i];
+	wzpkg.crc[0] = crc & 0xff;
+	wzpkg.crc[1] = (crc & 0xff00) >> 8;
+
+
+	return wzpkg; 
+}
+
+
+SPKG InitSmallPackage(){
+	SPKG spkg;
+	int lenLoad = sizeof(spkg.load);
+	int lenHead = sizeof(spkg.head);
+	int i;
+	for(i=0;i<lenLoad;i++)
+		spkg.load[i] = i;	
+	for(i=0;i<lenHead;i++)
+		spkg.head[i] = i+10;
+	
+	return spkg;
+}
+
+
+int SendSmallPackage(CFG cfg,SPKG spkg){
+
+	printf("SendSmallPackage()\n");	
+	int sock;
+	sock = socket(AF_INET,SOCK_DGRAM,0);
+	struct sockaddr_in destAddr;
+	destAddr.sin_family = AF_INET;
+	destAddr.sin_port = htons(5566);
+	destAddr.sin_addr.s_addr=inet_addr("192.168.1.80");
+	
+	sendto(sock,&spkg,sizeof(spkg),0,
+		(struct sockaddr *)&destAddr,sizeof(destAddr));
+
+	return 0;
+}
+
+
+int  PushWZ2L(pLPKG  plpkg, WZPKG wzpkg){
+	int k;
+	int i;
+	bzero(plpkg,8192);
+	for(i=0;i<500;i++){
+		plpkg->load[8*i] =
+			(wzpkg.load[i*9+1]<<8) + (wzpkg.load[i*9+2]);
+	}
+	plpkg->tail.w11 = 0xffff;	
+	plpkg->tail.w13 = 0xffff;
+	plpkg->tail.w14 = 0x8000;
+	unsigned int crc = CalcLCRC(*plpkg);	
+	plpkg->tail.w15 = crc;
+
+	return 0;
+}
+
+
+
+int  PushL2S(pSPKG  pspkg, LPKG lpkg){
+	SPKG spkg;
+
+	return 0;
+}
+
+
+unsigned int CalcLCRC(LPKG lpkg){
+	int i;	
+	unsigned int crc =0;
+	for(i=0;i<4000;i++)
+		crc = crc + lpkg.load[i];
+	for(i=0;i<80;i++)
+		crc = crc + lpkg.expr[i];
+	crc = crc + lpkg.tail.w0;
+	crc = crc + lpkg.tail.w1_3[0];
+	crc = crc + lpkg.tail.w1_3[1];
+	crc = crc + lpkg.tail.w1_3[2];
+	for(i=4;i<=10;i++)
+		crc =crc + lpkg.tail.w4_10[i];
+	crc = crc + lpkg.tail.w11;
+	crc = crc + lpkg.tail.w12;
+	crc = crc + lpkg.tail.w13;
+	crc = crc + lpkg.tail.w14;
+
+	return crc;	
+}
+
+int SendDS7(CFG cfg,WZPKG wzpkg){
+	printf("......SendDS7......\n");
+	WZPKG wzpkg1 = InitWZPackage(2000);
+//	SPKG spkg = InitSmallPackage();
+	LPKG lpkg;
+	PushWZ2L(&lpkg,wzpkg1);
+//	SPKG pspkg[8];
+//	PushL2S(&pspkg,plpkg[0]);
+//	SendSmallPackage(pspkg[0]);
+
+	return 0;
+}
+
+
+
