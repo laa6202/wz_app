@@ -1,5 +1,5 @@
-CC=arm-linux-gcc
-#CC=gcc 
+#CC=arm-linux-gcc
+CC=gcc 
 FLAG= -std=c99
 TAR=wz_app
 SRC=main.c init.c action.c \
