@@ -24,7 +24,6 @@ typedef struct LPKG{
 
 
 typedef struct SPKG{
-	unsigned char head[28];
 	unsigned char load[1024];
 }	SPKG,*pSPKG;
 
@@ -32,7 +31,7 @@ typedef struct SPKG{
 WZPKG InitWZPackage(int lenSample);
 SPKG InitSmallPackage(void);
 int PushWZ2L(pLPKG plpkg,WZPKG wzpkg);
-int PushL2S(pSPKG  pspkg,LPKG lpkg);
+int PushL2S(pSPKG  pspkg[8] ,LPKG lpkg);
 unsigned int CalcLCRC(LPKG lpkg);
 int SendSmallPackage(CFG cfg,SPKG spkg);
 int SendDS7(CFG cfg,WZPKG wzpkg);

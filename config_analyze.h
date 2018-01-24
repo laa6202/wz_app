@@ -3,6 +3,6 @@
 
 
 int GetConfig(pCFG pcfg);
-
+int CheckCfgFileExist(char * fn);
 
 #endif

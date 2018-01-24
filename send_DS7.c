@@ -54,12 +54,9 @@ WZPKG InitWZPackage(int lenSample){
 SPKG InitSmallPackage(){
 	SPKG spkg;
 	int lenLoad = sizeof(spkg.load);
-	int lenHead = sizeof(spkg.head);
 	int i;
 	for(i=0;i<lenLoad;i++)
-		spkg.load[i] = i;	
-	for(i=0;i<lenHead;i++)
-		spkg.head[i] = i+10;
+		spkg.load[i] = i+10;
 	
 	return spkg;
 }
@@ -101,7 +98,7 @@ int  PushWZ2L(pLPKG  plpkg, WZPKG wzpkg){
 
 
 
-int  PushL2S(pSPKG  pspkg, LPKG lpkg){
+int  PushL2S(pSPKG  pspkg[8], LPKG lpkg){
 	UCHAR data[8192];
 	memset(data,0,8192);
 	for(int i=0;i<4000;i++){
@@ -113,21 +110,29 @@ int  PushL2S(pSPKG  pspkg, LPKG lpkg){
 		data[i*2+4001] = (lpkg.expr[i] & 0xff);
 	}
 
+	data[8182] = (lpkg.tail.w11 & 0xff00) >> 8;
+	data[8183] = lpkg.tail.w11 & 0xff;
 	data[8184] = (lpkg.tail.w12 & 0xff00) >> 8;
 	data[8185] = lpkg.tail.w12 & 0xff;
-	data[8196] = (lpkg.tail.w13 & 0xff00) >> 8;
-	data[8197] = lpkg.tail.w13 & 0xff;
+	data[8186] = (lpkg.tail.w13 & 0xff00) >> 8;
+	data[8187] = lpkg.tail.w13 & 0xff;
 	data[8188] = (lpkg.tail.w14 & 0xff00) >> 8;
 	data[8189] = lpkg.tail.w14 & 0xff;
 	data[8190] = (lpkg.tail.w15 & 0xff00) >> 8;
 	data[8191] = lpkg.tail.w15 & 0xff;
 
-	memset(pspkg,0,sizeof(SPKG));
-	for (int i=0;i<28;i++){
-		pspkg->head[i] = 0;
-	}
+	for(int i=0;i<8;i++)
+		memset(pspkg[i],0,sizeof(SPKG));
+
 	for(int i=0;i<1024;i++){
-		pspkg->load[i] = data[i]; 
+		pspkg[0]->load[i] = data[i]; 
+		pspkg[1]->load[i] = data[i+1024]; 
+		pspkg[2]->load[i] = data[i+1024 * 2]; 
+		pspkg[3]->load[i] = data[i+1024 * 3]; 
+		pspkg[4]->load[i] = data[i+1024 * 4]; 
+		pspkg[5]->load[i] = data[i+1024 * 5]; 
+		pspkg[6]->load[i] = data[i+1024 * 6]; 
+		pspkg[7]->load[i] = data[i+1024 * 7]; 
 	}	
 	return 0;
 }
@@ -160,9 +165,13 @@ int SendDS7(CFG cfg,WZPKG wzpkg){
 //	SPKG spkg = InitSmallPackage();
 	LPKG lpkg;
 	PushWZ2L(&lpkg,wzpkg1);
-	SPKG spkg;
-	PushL2S(&spkg,lpkg);
-	SendSmallPackage(cfg,spkg);
+	pSPKG * ppspkg;
+	ppspkg = (pSPKG *) malloc(sizeof(pSPKG) * 8);
+	for(int i=0;i<8;i++)
+		ppspkg[i] = (pSPKG) malloc(sizeof(SPKG));
+	PushL2S(ppspkg,lpkg);
+	for(int i=0;i<8;i++)
+		SendSmallPackage(cfg,*ppspkg[i]);
 
 	return 0;
 }
