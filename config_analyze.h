@@ -4,5 +4,6 @@
 
 int GetConfig(pCFG pcfg);
 int CheckCfgFileExist(char * fn);
+int SetDefaultCfg(pCFG pcfg);
 
 #endif

@@ -8,13 +8,10 @@
 
 int GetConfig(pCFG pcfg){
 	printf("......GetConfig......\n");
-
 	char fn[1024];
-	CheckCfgFileExist(fn);
-
-	pcfg->remoteHost.port = 5566;
-	strcpy(pcfg->remoteHost.ip,"192.168.1.80");
-	pcfg->remoteHost.status = 1;
+	int cfgFileExistN = CheckCfgFileExist(fn);
+	SetDefaultCfg(pcfg);
+	
 
 	return 0;
 }
@@ -29,10 +26,22 @@ int CheckCfgFileExist(char * fn){
 	int isExist = access(fn,F_OK);
 	if(isExist != 0){
 		printf("Error: Lost Configuration file in working path.\n");
-		printf("Error: The app can not work.\n");
+		printf("Error: The app CAN NOT work correctly.\n");
 		printf("Note: Please Contact Supplier Immediatiely!\n");
 	}
 	return isExist;
+}
+
+
+
+int SetDefaultCfg(pCFG pcfg){
+
+	pcfg->remoteHost.port = 5566;
+	strcpy(pcfg->remoteHost.ip,"192.168.1.80");
+	pcfg->remoteHost.status = 1;
+
+
+	return 0;
 }
 
 
