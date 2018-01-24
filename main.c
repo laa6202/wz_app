@@ -5,8 +5,6 @@
 int main(int argc ,char ** argv){
 	
 	printf("wz_app\n");
-	printf("wz_app\n");
-	printf("wz_app\n");
 	
 	CFG cfg;
 	init(&cfg);

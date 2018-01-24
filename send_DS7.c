@@ -64,7 +64,7 @@ SPKG InitSmallPackage(){
 
 int SendSmallPackage(CFG cfg,SPKG spkg){
 
-	printf("SendSmallPackage()\n");	
+//	printf("SendSmallPackage()\n");	
 	int sock;
 	sock = socket(AF_INET,SOCK_DGRAM,0);
 	struct sockaddr_in destAddr;
@@ -72,8 +72,8 @@ int SendSmallPackage(CFG cfg,SPKG spkg){
 	destAddr.sin_port = htons(cfg.remoteHost.port);
 	destAddr.sin_addr.s_addr=inet_addr(cfg.remoteHost.ip);
 
-	printf("Send DGRAM to %s on %d port\n",
-				cfg.remoteHost.ip,cfg.remoteHost.port);
+//	printf("Send DGRAM to %s on %d port\n",
+//				cfg.remoteHost.ip,cfg.remoteHost.port);
 	
 	sendto(sock,&spkg,sizeof(spkg),0,
 		(struct sockaddr *)&destAddr,sizeof(destAddr));

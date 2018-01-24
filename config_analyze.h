@@ -5,5 +5,7 @@
 int GetConfig(pCFG pcfg);
 int CheckCfgFileExist(char * fn);
 int SetDefaultCfg(pCFG pcfg);
+int SetConfig(pCFG pcfg,char* fn);
+int SeperateKey(char * key,char * value,const char * txtLine);
 
 #endif
