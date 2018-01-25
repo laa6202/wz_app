@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include "send_DS7.h"
 
 
@@ -62,18 +59,33 @@ SPKG InitSmallPackage(){
 }
 
 
-int SendSmallPackage(CFG cfg,SPKG spkg){
+int InitSocket(int * sock, struct sockaddr_in *destAddr,CFG cfg){
+//	int sock;
+	*sock = socket(AF_INET,SOCK_DGRAM,0);
+	printf("sock = %d\t",*sock);
+//	struct sockaddr_in destAddr;
+	destAddr->sin_family = AF_INET;
+	destAddr->sin_port = htons(cfg.remoteHost.port);
+	destAddr->sin_addr.s_addr=inet_addr(cfg.remoteHost.ip);
 
-//	printf("SendSmallPackage()\n");	
-	int sock;
-	sock = socket(AF_INET,SOCK_DGRAM,0);
-	struct sockaddr_in destAddr;
-	destAddr.sin_family = AF_INET;
-	destAddr.sin_port = htons(cfg.remoteHost.port);
-	destAddr.sin_addr.s_addr=inet_addr(cfg.remoteHost.ip);
+	struct sockaddr_in srcAddr;
+	srcAddr.sin_family = AF_INET;
+	srcAddr.sin_port = htons(8080);
+//	srcAddr.sin_addr.s_addr=inet_addr(INADDR_ANY);
+	srcAddr.sin_addr.s_addr=0;
+	int ret1 = bind(*sock,(const struct sockaddr *)&srcAddr,sizeof(srcAddr));
+	printf("bind ret = %d\t",ret1);
 
 	printf("Send DGRAM to %s on %d port\n",
 				cfg.remoteHost.ip,cfg.remoteHost.port);
+	
+  return *sock;
+}	
+
+
+
+int SendSmallPackage(SPKG spkg,int sock,struct sockaddr_in destAddr){
+	printf("SendSmallPackage()\t");	
 	
 	ssize_t ret;	
 	ret =	sendto(sock,&spkg,sizeof(spkg),0,
@@ -179,8 +191,12 @@ int SendDS7(CFG cfg,WZPKG wzpkg){
 	for(int i=0;i<8;i++)
 		ppspkg[i] = (pSPKG) malloc(sizeof(SPKG));
 	PushL2S(ppspkg,lpkg);
+	int sock;
+	struct sockaddr_in destAddr;	
+	InitSocket(&sock,&destAddr,cfg);
+
 	for(int i=0;i<8;i++)
-		SendSmallPackage(cfg,*ppspkg[i]);
+		SendSmallPackage(*ppspkg[i],sock,destAddr);
 
 	return 0;
 }

@@ -2,7 +2,10 @@
 #define __SEND_DS7_H
 
 #include "types.h"
-
+#include "sys/socket.h"
+#include "sys/types.h"
+#include "netinet/in.h"
+#include "arpa/inet.h"
 
 typedef struct LPKGTAIL{
 	unsigned int w0;	//0
@@ -33,7 +36,8 @@ SPKG InitSmallPackage(void);
 int PushWZ2L(pLPKG plpkg,WZPKG wzpkg);
 int PushL2S(pSPKG  pspkg[8] ,LPKG lpkg);
 unsigned int CalcLCRC(LPKG lpkg);
-int SendSmallPackage(CFG cfg,SPKG spkg);
+int InitSocket(int * sock, struct sockaddr_in * destAddr,CFG cfg);
+int SendSmallPackage(SPKG spkg, int sock, struct sockaddr_in destAddr);
 int SendDS7(CFG cfg,WZPKG wzpkg);
 
 
