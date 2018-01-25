@@ -38,7 +38,7 @@ int CheckCfgFileExist(char * fn){
 int SetDefaultCfg(pCFG pcfg){
 
 	pcfg->remoteHost.port = 8080;
-	strcpy(pcfg->remoteHost.ip,"192.168.1.80");
+	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
 	pcfg->remoteHost.status = 1;
 
 

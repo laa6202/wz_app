@@ -72,12 +72,14 @@ int SendSmallPackage(CFG cfg,SPKG spkg){
 	destAddr.sin_port = htons(cfg.remoteHost.port);
 	destAddr.sin_addr.s_addr=inet_addr(cfg.remoteHost.ip);
 
-//	printf("Send DGRAM to %s on %d port\n",
-//				cfg.remoteHost.ip,cfg.remoteHost.port);
+	printf("Send DGRAM to %s on %d port\n",
+				cfg.remoteHost.ip,cfg.remoteHost.port);
 	
-	sendto(sock,&spkg,sizeof(spkg),0,
+	ssize_t ret;	
+	ret =	sendto(sock,&spkg,sizeof(spkg),0,
 		(struct sockaddr *)&destAddr,sizeof(destAddr));
-
+	
+	printf("ret = %ld\n",ret);
 	return 0;
 }
 
@@ -89,6 +91,10 @@ int  PushWZ2L(pLPKG  plpkg, WZPKG wzpkg){
 	for(i=0;i<500;i++){
 		plpkg->load[8*i] =
 			(wzpkg.load[i*9+1]<<8) + (wzpkg.load[i*9+2]);
+		plpkg->load[8*i+1] =
+			(wzpkg.load[i*9+4]<<8) + (wzpkg.load[i*9+5]);
+		plpkg->load[8*i+2] =
+			(wzpkg.load[i*9+7]<<8) + (wzpkg.load[i*9+8]);
 	}
 	plpkg->tail.w11 = 0xffff;	
 	plpkg->tail.w13 = 0xffff;
