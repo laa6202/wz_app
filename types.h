@@ -31,7 +31,9 @@ typedef struct {
 
 
 typedef struct {
-	char  fName[250];
+	char  fNameDef[250];
+	char	fNameSet[250];
+	int 	fUsedID;
 	RHOST remoteHost;
 } CFG, *pCFG;
 

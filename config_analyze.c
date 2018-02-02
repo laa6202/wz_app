@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
+#include <time.h>
 #include "config_analyze.h"
 
 
@@ -36,11 +36,25 @@ int CheckCfgFileExist(char * fn){
 
 
 int SetDefaultCfg(pCFG pcfg){
-
+//default Remote host 
 	pcfg->remoteHost.port = 8080;
 	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
 	pcfg->remoteHost.status = 1;
-
+//default file name
+	time_t now;
+	time(&now);
+	char cnow[8];
+	char fn[250];
+	memset(fn,0,sizeof(fn));
+	getcwd(fn,sizeof(fn));	
+	sprintf(cnow,"%4ld",now);
+	strcat(fn,"/rec");
+	strcat(fn,cnow);
+	strcat(fn,".dat");
+	strcpy(pcfg->fNameDef,fn);	
+	pcfg->fUsedID = 0;
+	memset(pcfg->fNameSet,0,sizeof(pcfg->fNameSet));
+//	printf("The default save file name = %s\n",pcfg->fNameDef);
 
 	return 0;
 }
@@ -54,10 +68,10 @@ int SetConfig(pCFG pcfg,char * fn){
 		char * p1 = strchr(txtLine,'#');
 		char * p2 = strchr(txtLine,'=');
 //		printf("txtLine = %s",txtLine);
-		char key[50],value[200];
+		char key[50],value[50];
 		if((p1 == NULL) && (p2 != NULL)){
-			
 			SeperateKey(key,value,txtLine);
+			SetKeyValue(pcfg,key,value);
 		}
 	}
 	fclose(fp);
@@ -68,7 +82,21 @@ int SetConfig(pCFG pcfg,char * fn){
 int SeperateKey(char * key,char* value,const char * txtLine){
 	memset(key,0,sizeof(key));
 	memset(value,0,sizeof(value));
-	puts(txtLine);
+	char cLine[200];
+	strcpy(cLine,txtLine);
+//	printf("%s \n",cLine);
+	int lenLine = strlen(cLine);
+//	printf("total = %d\n",lenLine);
+	key = strtok(cLine,"=");
+	value = strtok(NULL,"=");
+//	printf("key = %s\tvalue = %s\n",key,value);
+
+	return 0;
+}
+
+
+int SetKeyValue(pCFG pcfg,const char *key,const char * value){
+
 
 
 	return 0;
