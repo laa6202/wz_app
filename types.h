@@ -27,13 +27,16 @@ typedef struct {
 	int  port;
 	char ip[20];
 	int  status;
+	int  pushOrNot;
 } RHOST, *pRHOST;
 
 
 typedef struct {
 	char  fNameDef[250];
-	char	fNameSet[250];
+	char	fNameDir[250];
+	char	fNameSeed[250];
 	int 	fUsedID;
+	int 	dirSaveOrNot;
 	RHOST remoteHost;
 } CFG, *pCFG;
 
