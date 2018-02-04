@@ -1,5 +1,6 @@
 #include "types.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
@@ -40,6 +41,7 @@ int SetDefaultCfg(pCFG pcfg){
 	pcfg->remoteHost.port = 8080;
 	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
 	pcfg->remoteHost.status = 1;
+	pcfg->remoteHost.pushOrNot = 0;
 //default file name
 	time_t now;
 	time(&now);
@@ -52,8 +54,10 @@ int SetDefaultCfg(pCFG pcfg){
 	strcat(fn,cnow);
 	strcat(fn,".dat");
 	strcpy(pcfg->fNameDef,fn);	
+	memset(pcfg->fNameDir,0,sizeof(pcfg->fNameDir));
+	memset(pcfg->fNameSeed,0,sizeof(pcfg->fNameSeed));
 	pcfg->fUsedID = 0;
-	memset(pcfg->fNameSet,0,sizeof(pcfg->fNameSet));
+	pcfg->dirSaveOrNot = 0;	
 //	printf("The default save file name = %s\n",pcfg->fNameDef);
 
 	return 0;
@@ -96,7 +100,10 @@ int SeperateKey(char * key,char* value,const char * txtLine){
 
 
 int SetKeyValue(pCFG pcfg,const char *key,const char * value){
-
+	if(strcmp(key,"Used File ID")==0){
+		pcfg->fUsedID = atoi(value);
+		printf("fUsedID = %d\n",pcfg->fUsedID);
+	}
 
 
 	return 0;
