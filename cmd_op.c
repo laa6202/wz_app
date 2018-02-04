@@ -19,8 +19,11 @@ int GenCmdPkgRdy(pCMD pcmd){
 
 int CheckPkgRdy(const CMD cmd){
 	printf("......CheckPkgRdy......\n");
+	int pkgRdy = 0;
+	if(cmd.q != 0)
+		pkgRdy = 1;
 
-	return 0;
+	return pkgRdy;
 }
 
 
