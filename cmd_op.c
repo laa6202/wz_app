@@ -5,7 +5,7 @@
 
 
 int GenCmdPkgRdy(pCMD pcmd){
-	printf("......GenCmdPkgRdy......\n");
+	printf("......GenCMD : GenCmdPkgRdy......\n");
 	pcmd->devid = 0;
 	pcmd->rw = 0;
 	pcmd->modid = 0x32;
@@ -18,7 +18,7 @@ int GenCmdPkgRdy(pCMD pcmd){
 
 
 int CheckPkgRdy(const CMD cmd){
-	printf("......CheckPkgRdy......\n");
+	printf("......CHECK : CheckPkgRdy......\n");
 	int pkgRdy = 0;
 	if(cmd.q != 0)
 		pkgRdy = 1;

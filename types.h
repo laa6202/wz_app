@@ -10,6 +10,8 @@ typedef struct {
 	UCHAR addr;
 	UCHAR data;
 	UCHAR q;
+	UCHAR status;
+	UCHAR res;
 } CMD, *pCMD;
 
  

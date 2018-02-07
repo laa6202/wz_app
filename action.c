@@ -15,6 +15,7 @@ int action(CFG cfg){
 //while(1)
 	for(int i=0;i<4;i++)
 	{
+		printf("--- action main ---\n");
 		GenCmdPkgRdy(&cmdCheckPkg);	
 		CspiRead(&cmdCheckPkg);
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);

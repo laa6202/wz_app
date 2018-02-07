@@ -11,9 +11,10 @@ int CspiRead(pCMD pcmd){
 	
 	time_t now;
 	time(&now);
-	srand(now);
-	int r = rand();
+	srand(now+pcmd->res);
+	int r = rand(); 
 	pcmd->q = r%2;	
+	pcmd->res = r & 0xff;
 	return 0;
 }
 
