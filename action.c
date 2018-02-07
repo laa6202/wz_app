@@ -13,7 +13,8 @@ int action(CFG cfg){
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
 //while(1)
-	if(1){
+	for(int i=0;i<4;i++)
+	{
 		GenCmdPkgRdy(&cmdCheckPkg);	
 		CspiRead(&cmdCheckPkg);
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);
