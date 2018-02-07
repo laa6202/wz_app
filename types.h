@@ -34,11 +34,18 @@ typedef struct {
 
 
 typedef struct {
+	char fNameDef[250];
+	char fName[250];
+	int fUsedID;
+	int saveOrNot;
+	int numOfPkgPreFile;
+} FDIR, *pFDIR;		
+
+typedef struct {
 	char  fNameDef[250];
-	char	fNameDir[250];
 	char	fNameSeed[250];
 	int 	fUsedID;
-	int 	dirSaveOrNot;
+	FDIR	fileDir;
 	RHOST remoteHost;
 } CFG, *pCFG;
 

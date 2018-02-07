@@ -42,7 +42,7 @@ int SetDefaultCfg(pCFG pcfg){
 	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
 	pcfg->remoteHost.status = 1;
 	pcfg->remoteHost.pushOrNot = 0;
-//default file name
+//default direction save file name
 	time_t now;
 	time(&now);
 	char cnow[8];
@@ -53,12 +53,12 @@ int SetDefaultCfg(pCFG pcfg){
 	strcat(fn,"/rec");
 	strcat(fn,cnow);
 	strcat(fn,".dat");
-	strcpy(pcfg->fNameDef,fn);	
-	memset(pcfg->fNameDir,0,sizeof(pcfg->fNameDir));
+	strcpy(pcfg->fileDir.fNameDef,fn);	
 	memset(pcfg->fNameSeed,0,sizeof(pcfg->fNameSeed));
-	pcfg->fUsedID = 0;
-	pcfg->dirSaveOrNot = 0;	
-//	printf("The default save file name = %s\n",pcfg->fNameDef);
+	pcfg->fileDir.fUsedID = 0;
+	memset(pcfg->fileDir.fName,0,sizeof(pcfg->fileDir.fName));
+	pcfg->fileDir.saveOrNot = 0;	
+	pcfg->fileDir.numOfPkgPreFile=1;
 
 	return 0;
 }
@@ -84,25 +84,32 @@ int SetConfig(pCFG pcfg,char * fn){
 
 
 int SeperateKey(char * key,char* value,const char * txtLine){
-	memset(key,0,sizeof(key));
-	memset(value,0,sizeof(value));
+	char * key2;
+	char * value2;
 	char cLine[200];
 	strcpy(cLine,txtLine);
 //	printf("%s \n",cLine);
 	int lenLine = strlen(cLine);
 //	printf("total = %d\n",lenLine);
-	key = strtok(cLine,"=");
-	value = strtok(NULL,"=");
-//	printf("key = %s\tvalue = %s\n",key,value);
+	key2 = strtok(cLine,"=");
+	value2 = strtok(NULL,"=");
+	strcpy(key,key2);
+	strcpy(value,value2);
+//	printf("Seperate : key = %s\tvalue = %s\n",key,value);
 
 	return 0;
 }
 
 
 int SetKeyValue(pCFG pcfg,const char *key,const char * value){
-	if(strcmp(key,"Used File ID")==0){
+//	printf("SetKey : key = %s\n",key);
+	if(strcmp(key,"fUsedID")==0){
 		pcfg->fUsedID = atoi(value);
 		printf("fUsedID = %d\n",pcfg->fUsedID);
+	}
+	if(strcmp(key,"fileDir.saveOrNot")==0){
+		pcfg->fileDir.saveOrNot = atoi(value);
+		printf("fileDir.saveOrNot = %d\n",pcfg->fileDir.saveOrNot);
 	}
 
 
