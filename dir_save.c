@@ -14,16 +14,32 @@ int WriteToFile(const WZPKG wzpkg,FILE * fid){
 }
 
 
-int SaveOneWZPKG(const CFG cfg,WZPKG wzpkg){
-	printf("......SaveOneWZPKG......\n");
-	char fn[250];
+int GetFn(char * fn,const CFG cfg){
 	int fUsedID = cfg.fileDir.fUsedID;
 	if(fUsedID == 0)
 		strcpy(fn,cfg.fileDir.fNameDef);
 	else
 		strcpy(fn,cfg.fileDir.fName);
-		
+	return 0;
+}
+
+
+int SaveOneWZPKG(const CFG cfg,WZPKG wzpkg){
+	printf("......SaveOneWZPKG......\n");
+	char fn[250];
+	GetFn(fn,cfg);	
 	FILE * fid = fopen(fn,"w");
+	WriteToFile(wzpkg,fid);		
+	fclose(fid);	
+	return 0;
+}
+
+
+int SaveSomeWZPKG(const CFG cfg,WZPKG wzpkg,int mount){
+	printf("......SaveOneWZPKG......\n");
+	char fn[250];
+	GetFn(fn,cfg);	
+	FILE * fid = fopen(fn,"a");
 	WriteToFile(wzpkg,fid);		
 	fclose(fid);	
 	return 0;

@@ -23,7 +23,7 @@ int action(CFG cfg){
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 		if(pkgRdy){
 			PspiRead(&wzpkg);
-			SaveOneWZPKG(cfg,wzpkg);		
+			SaveSomeWZPKG(cfg,wzpkg,0);		
 		}	
 	}
 	return 0;
