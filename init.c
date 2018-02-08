@@ -6,5 +6,6 @@ int init(pCFG pcfg){
 	printf("...init...\n");
 		
 	GetConfig(pcfg);
+	ShowAllCfg(*pcfg);
 	return 0;
 }

@@ -40,7 +40,7 @@ int SetDefaultCfg(pCFG pcfg){
 //default Remote host 
 	pcfg->remoteHost.port = 8080;
 	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
-	pcfg->remoteHost.status = 1;
+	pcfg->remoteHost.status = 0;
 	pcfg->remoteHost.pushOrNot = 0;
 //default direction save file name
 	time_t now;
@@ -54,12 +54,12 @@ int SetDefaultCfg(pCFG pcfg){
 	strcat(fn,cnow);
 	strcat(fn,".dat");
 	strcpy(pcfg->fileDir.fNameDef,fn);	
-	memset(pcfg->fNameSeed,0,sizeof(pcfg->fNameSeed));
 	pcfg->fileDir.fUsedID = 0;
 	memset(pcfg->fileDir.fName,0,sizeof(pcfg->fileDir.fName));
 	pcfg->fileDir.saveOrNot = 0;	
 	pcfg->fileDir.numOfPkgPreFile=1;
-
+//default miniSeed file 
+	memset(pcfg->fNameSeed,0,sizeof(pcfg->fNameSeed));
 	return 0;
 }
 
@@ -69,6 +69,9 @@ int SetConfig(pCFG pcfg,char * fn){
 	char txtLine[250];
 	while(!feof(fp)){
 		fgets(txtLine,250,fp);
+		char * find = strchr(txtLine,'\n');
+		if(find)
+			*find = '\0';
 		char * p1 = strchr(txtLine,'#');
 		char * p2 = strchr(txtLine,'=');
 //		printf("txtLine = %s",txtLine);
@@ -96,25 +99,56 @@ int SeperateKey(char * key,char* value,const char * txtLine){
 	strcpy(key,key2);
 	strcpy(value,value2);
 //	printf("Seperate : key = %s\tvalue = %s\n",key,value);
-
 	return 0;
 }
 
 
 int SetKeyValue(pCFG pcfg,const char *key,const char * value){
-//	printf("SetKey : key = %s\n",key);
-	if(strcmp(key,"fUsedID")==0){
-		pcfg->fUsedID = atoi(value);
-		printf("fUsedID = %d\n",pcfg->fUsedID);
+//remoteHost
+	if(strcmp(key,"remoteHost.ip")==0)
+		strcpy(pcfg->remoteHost.ip,value);
+	if(strcmp(key,"remoteHost.port")==0)
+		pcfg->remoteHost.port = atoi(value);
+	if(strcmp(key,"remoteHost.pushOrNot")==0)
+		pcfg->remoteHost.pushOrNot = atoi(value);
+
+//dirFile
+	if(strcmp(key,"fileDir.fName")==0){
+		strcpy(pcfg->fileDir.fName,value);
+	}
+	if(strcmp(key,"fileDir.fUsedID")==0){
+		pcfg->fileDir.fUsedID = atoi(value);
 	}
 	if(strcmp(key,"fileDir.saveOrNot")==0){
 		pcfg->fileDir.saveOrNot = atoi(value);
-		printf("fileDir.saveOrNot = %d\n",pcfg->fileDir.saveOrNot);
+	}
+	if(strcmp(key,"fileDir.numOfPkgPreFile")==0){
+		pcfg->fileDir.numOfPkgPreFile = atoi(value);
 	}
 
 
 	return 0;
 }
+
+
+
+int ShowAllCfg(const CFG cfg){
+//remoteHost
+	printf("remoteHost.ip = %s\n",cfg.remoteHost.ip);
+	printf("remoteHost.port = %d\n",cfg.remoteHost.port);
+	printf("remoteHost.status = %d\n",cfg.remoteHost.status);
+	printf("remoteHost.pushOrNot = %d\n",cfg.remoteHost.pushOrNot);
+//fileDir
+	printf("fileDir.fNameDef = %s\n",cfg.fileDir.fNameDef);
+	printf("fileDir.fName = %s\n",cfg.fileDir.fName);
+	printf("fileDir.fUsedID = %d\n",cfg.fileDir.fUsedID);
+	printf("fileDir.saveOrNot = %d\n",cfg.fileDir.saveOrNot);
+	printf("fileDir.numOfPkgPreFile = %d\n",cfg.fileDir.numOfPkgPreFile);
+
+
+	return 0;
+}
+
 
 
 
