@@ -5,6 +5,7 @@
 #include "cmd_op.h"
 #include "pspi_read.h"
 #include "cspi_rw.h"
+#include "dir_save.h"
 
 
 int action(CFG cfg){
@@ -21,7 +22,7 @@ int action(CFG cfg){
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 		if(pkgRdy){
 			PspiRead(&wzpkg);
-		
+			SaveOneWZPKG(cfg,wzpkg);		
 		}	
 	}
 	return 0;
