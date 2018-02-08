@@ -22,6 +22,8 @@ typedef struct {
 	UCHAR load[18000];
 	UCHAR tail[1000];
 	UCHAR crc[2];
+	int index;
+	int res;
 }	WZPKG,*pWZPKG;
 
 

@@ -11,6 +11,7 @@
 int action(CFG cfg){
 	printf("...action...\n");
 	WZPKG wzpkg;
+	InitWZPKG(&wzpkg);
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
 //while(1)

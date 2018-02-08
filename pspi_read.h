@@ -3,6 +3,7 @@
 
 int PspiRead(pWZPKG pwzpkg);
 
+int InitWZPKG(pWZPKG pwzpkg);
 int MakeWZPKG(pWZPKG pwzpkg);
 int init_rand();
 

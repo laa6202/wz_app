@@ -10,7 +10,14 @@ int PspiRead(pWZPKG pwzpkg){
 	printf("......PspiRead......\n");
 	
 	MakeWZPKG(pwzpkg);
+	printf("index of wzpkg = %d\n",pwzpkg->index);
+	return 0;
+}
 
+
+int InitWZPKG(pWZPKG pwzpkg){
+	pwzpkg->index = 0;
+	pwzpkg->res = 0;
 	return 0;
 }
 
@@ -61,6 +68,7 @@ int MakeWZPKG(pWZPKG pwzpkg){
 	pwzpkg->crc[0] = (crc & 0xff00) >> 8;
 	pwzpkg->crc[1] = (crc & 0xff);
 
+	pwzpkg->index ++;
 	return 0;
 }
 
