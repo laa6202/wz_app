@@ -8,7 +8,7 @@
 #include "dir_save.h"
 
 
-int action(CFG cfg){
+int action(CFG cfg,SPI cSPI,SPI pSPI){
 	printf("...action...\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
@@ -19,14 +19,21 @@ int action(CFG cfg){
 	{
 		printf("--- action main ---\n");
 		GenCmdPkgRdy(&cmdCheckPkg);	
-		CspiRead(&cmdCheckPkg);
+		CspiRead(&cmdCheckPkg,&cSPI);
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 		if(pkgRdy){
-			PspiRead(&wzpkg);
+//			PspiRead(&wzpkg);
 			SaveSomeWZPKG(cfg,wzpkg,0);		
 		}	
 	}
 	return 0;
 }
+
+
+int ShowCMD(CMD cmd){
+
+	return 0;
+}
+
 
 

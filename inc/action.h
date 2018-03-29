@@ -3,7 +3,9 @@
 
 #include "types.h"
 
-int action(CFG cfg);
+int action(CFG cfg,SPI,SPI);
+int ShowCMD(CMD);
+
 
 #endif
 

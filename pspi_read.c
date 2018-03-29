@@ -14,10 +14,11 @@
 
 #include "types.h"
 #include "pspi_read.h"
+
 int PspiInit(pSPI pspi){
 	int fd;
 	int ret;
-	int mode;
+	int mode = 0;
 	fd = open(pspi->device, O_RDWR);  
     if (fd < 0) 
 	{
@@ -82,6 +83,9 @@ int PspiInit(pSPI pspi){
 	
 	return 0;
 }
+
+
+
 int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		int ret;
 //		uint8_t tx[pwzpkg->lenLoad] ;  
@@ -138,17 +142,18 @@ for(ret=12;ret<pwzpkg->lenLoad-pwzpkg->lenTail-2;ret++){
 }// 实现
 
 
+
 int InitWZPKG(pWZPKG pwzpkg){
 	pwzpkg->index = 0;
 	pwzpkg->res = 0;
+	pwzpkg->lenLoad = 18062;
+	pwzpkg->lenTail = 48;
 	return 0;
 }
 
 
 int MakeWZPKG(pWZPKG pwzpkg){
 	int i=0;
-	pwzpkg->lenLoad = 18062;
-	pwzpkg->lenTail = 48;
 
 	memset(pwzpkg->head,0,sizeof(pwzpkg->head));
 	pwzpkg->head[0] = 0x57;

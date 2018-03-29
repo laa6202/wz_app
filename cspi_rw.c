@@ -15,7 +15,7 @@
 int CspiInit(pSPI pspi){
 	int fd;
 	int ret;
-	static uint8_t mode;
+	static uint8_t mode = 0;
 	fd = open(pspi->device, O_RDWR);  
     if (fd < 0) 
 	{

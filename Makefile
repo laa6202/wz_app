@@ -1,5 +1,5 @@
-#CC=arm-linux-gcc
-CC=gcc 
+CC=arm-linux-gcc
+#CC=gcc 
 FLAG= -std=c99
 LIB=
 INCDIR=inc

@@ -3,6 +3,8 @@
 
 #include "types.h"
 
-int init(pCFG pcfg);
+int InitCfg(pCFG pcfg);
+int InitSPI(pSPI pcSPI,pSPI ppSPI);
+int EndSPI(SPI cSPI,SPI pSPI);
 
 #endif
