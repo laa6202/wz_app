@@ -17,14 +17,14 @@ int InitCfg(pCFG pcfg){
 
 
 int InitSPI(pSPI pcSPI,pSPI ppSPI){
-	ppSPI->device = "/dev/spidev0.0";
+	ppSPI->device = "/dev/spidev1.0";
 	ppSPI->bits = 8;
 	ppSPI->speed = 20000000;
 #ifndef SIM
 	PspiInit(ppSPI);
 #endif
 
-	pcSPI->device = "/dev/spidev1.0";
+	pcSPI->device = "/dev/spidev0.0";
 	pcSPI->bits = 8;
 	pcSPI->speed = 100000;
 #ifndef SIM

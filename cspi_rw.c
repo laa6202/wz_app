@@ -87,7 +87,8 @@ int CspiInit(pSPI pspi){
 //read FPGA register using CMD struct
 int CspiRead(pCMD pcmd,pSPI pspi){
     int ret;  
-    uint8_t tx5[5] = {pcmd->devid,pcmd->rw,pcmd->modid,pcmd->addr,pcmd->data};
+		unsigned char tx0 = pcmd->devid | (pcmd->rw << 7);
+    uint8_t tx5[5] = {tx0,pcmd->modid,pcmd->addr,pcmd->data,pcmd->q};
  
     uint8_t rx5[5] = {0, };  
     struct spi_ioc_transfer tr5 = {  
@@ -109,8 +110,10 @@ int CspiRead(pCMD pcmd,pSPI pspi){
 	  pcmd->status = 0;
 	  pcmd->q = rx5[4];
       printf("cspi transfer ok return value is %d \n", ret); 
-    }	  
-
+    }	 
+	for(int i=0;i<5;i++){ 
+		printf("tx5[%d] = %x\trx5[%d] = %x\n",i,tx5[i],i,rx5[i]);
+	}
 	return pcmd->status;
 }
 

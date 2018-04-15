@@ -20,9 +20,11 @@ int action(CFG cfg,SPI cSPI,SPI pSPI){
 		printf("--- action main ---\n");
 		GenCmdPkgRdy(&cmdCheckPkg);	
 		CspiRead(&cmdCheckPkg,&cSPI);
+		ShowCMD(cmdCheckPkg);
 		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 		if(pkgRdy){
-//			PspiRead(&wzpkg);
+			printf("pkgLen = %d\n",wzpkg.lenLoad);
+			PspiRead(&wzpkg,&pSPI);
 			SaveSomeWZPKG(cfg,wzpkg,0);		
 		}	
 	}
@@ -31,7 +33,8 @@ int action(CFG cfg,SPI cSPI,SPI pSPI){
 
 
 int ShowCMD(CMD cmd){
-
+	printf("CMD:devid=0x%x,rw=0x%x,modoid=0x%x,addr=0x%x,data=0x%x,q=0x%x\n",\
+				cmd.devid,cmd.rw,cmd.modid,cmd.addr,cmd.data,cmd.q);
 	return 0;
 }
 
