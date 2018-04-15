@@ -17,8 +17,8 @@
 int PspiInit(pSPI pspi){
 	int fd;
 	int ret;
-	int mode;
-	fd = open(pspi->device, O_RDWR);  
+	int mode = 0;
+ 	fd = open(pspi->device, O_RDWR);  
     if (fd < 0) 
 	{
 		printf("can't open device pspi");

@@ -28,15 +28,17 @@ int SaveOneWZPKG(const CFG cfg,WZPKG wzpkg){
 	printf("......SaveOneWZPKG......\n");
 	char fn[250];
 	GetFn(fn,cfg);	
+	printf("save file name : %s\n",fn);
 	FILE * fid = fopen(fn,"w");
 	WriteToFile(wzpkg,fid);		
 	fclose(fid);	
+	printf("......SaveOneWZPKG OK ......\n");
 	return 0;
 }
 
 
 int SaveSomeWZPKG(const CFG cfg,WZPKG wzpkg,int mount){
-	printf("......SaveOneWZPKG......\n");
+	printf("......SaveSomeWZPKG......\n");
 	char fn[250];
 	GetFn(fn,cfg);	
 	FILE * fid = fopen(fn,"a");

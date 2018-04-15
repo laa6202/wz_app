@@ -25,7 +25,8 @@ int action(CFG cfg,SPI cSPI,SPI pSPI){
 		if(pkgRdy){
 			printf("pkgLen = %d\n",wzpkg.lenLoad);
 			PspiRead(&wzpkg,&pSPI);
-			SaveSomeWZPKG(cfg,wzpkg,0);		
+		//	SaveSomeWZPKG(cfg,wzpkg,0);		
+			SaveOneWZPKG(cfg,wzpkg);		
 		}	
 	}
 	return 0;
