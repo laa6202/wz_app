@@ -89,6 +89,7 @@ int PspiInit(pSPI pspi){
 int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		int ret;
 //		uint8_t tx[pwzpkg->lenLoad] ;  
+pwzpkg->lenLoad = 4096;
 		uint8_t tx[pwzpkg->lenLoad] ;  
     uint8_t rx[pwzpkg->lenLoad] ;  
     struct spi_ioc_transfer tr = {  
@@ -100,6 +101,9 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
         .bits_per_word = pspi->bits,  
     };  
   
+		printf("pwpkg->lenLoad = %d\n",pwzpkg->lenLoad);
+		printf("pspi->fd = %d\n",pspi->fd);
+		printf("pspi->device = %s\n",pspi->device);
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message");

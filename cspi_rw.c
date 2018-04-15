@@ -111,9 +111,6 @@ int CspiRead(pCMD pcmd,pSPI pspi){
 	  pcmd->q = rx5[4];
       printf("cspi transfer ok return value is %d \n", ret); 
     }	 
-	for(int i=0;i<5;i++){ 
-		printf("tx5[%d] = %x\trx5[%d] = %x\n",i,tx5[i],i,rx5[i]);
-	}
 	return pcmd->status;
 }
 
