@@ -10,7 +10,7 @@
 
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
-	printf("...action...\n");
+	printf("--- action main ---\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
 	CMD cmdCheckPkg;
@@ -18,7 +18,6 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
 	static int index = 0;
 //	for(int i=0;i<40;i++)
 	{
-		printf("--- action main ---\n");
 //		GenCmdPkgRdy(&cmdCheckPkg);	
 //		CspiRead(&cmdCheckPkg,&cSPI);
 //		ShowCMD(cmdCheckPkg);

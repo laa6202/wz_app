@@ -17,8 +17,8 @@ int main(int argc ,char ** argv){
 	InitSPI(&cSPI,&pSPI);
 	KeyInit(&key);
 	
-	for(int i=0;i<40;i++){
-//	while(1){
+//	for(int i=0;i<40;i++){
+	while(1){
 		action(cfg,cSPI,pSPI,&key);
 	}
 	EndSPI(cSPI,pSPI);
