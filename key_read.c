@@ -47,7 +47,7 @@ int KeyRead(pKEY pkey)
 			//		printf("size of t is %d \n",sizeof(t));
       //    printf("t.type is %d \n",t.type);
 //          printf("t.code is %d \n",t.code);
-          printf("t.value is %d \n",t.value);
+//          printf("t.value is %d \n",t.value);
           pkey->value = t.value;			  //	printf("key114 %s\n",(t.value)?"Pressed":"Released");
     }
 		

@@ -75,15 +75,18 @@ int PspiInit(pSPI pspi){
 		printf("can't get pspi max speed hz");
 		abort();
 	}	
- pspi->fd = fd; 
-    printf("pspi mode: %d\n", pspi->mode);  
+		pspi->fd = fd; 
+		printf("pspi mode: %d\n", pspi->mode);  
     printf("pspi bits per word: %d\n", pspi->bits);  
     printf("pspi max speed: %d Hz (%d KHz)\n", pspi->speed, pspi->speed/1000); 
-	
 	return 0;
 }
+
+
+
 int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		int ret;
+		int i;
     int extra_num = pwzpkg->lenLoad % 4096;  
 		uint8_t tx[4096] ;  
     uint8_t rx[4096] ;  
@@ -96,112 +99,71 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
         .bits_per_word = pspi->bits,  
     };  
  
-/*
-		uint8_t tx1[extra_num] ;  
-    uint8_t rx1[extra_num] ;  
-    struct spi_ioc_transfer tr1 = {  
-        .tx_buf = (unsigned long)tx1,  
-        .rx_buf = (unsigned long)rx1,  
-        .len = extra_num,  
-        .delay_usecs = pspi->delay,  
-        .speed_hz = pspi->speed,  
-        .bits_per_word = pspi->bits,  
-    };  
-*/
-  
- 
+//pkg1
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message");
 			  abort();
 		} 
-    else
-      printf(" transfer ok ret is %d \n", ret);  
-  
-	 for(ret=0;ret<12;ret++){
-			pwzpkg->head[ret] = rx[ret];
+		for(i=0;i<12;i++){
+			pwzpkg->head[i] = rx[i];
 		}
-      printf(" feed head ok \n");  
-	
- 
-	for(ret=12;ret<4096;ret++){
-			pwzpkg->load[ret-12] = rx[ret-12];
+		for(i=12;i<4096;i++){
+			pwzpkg->load[i-12] = rx[i];
 		}
 
 
-
+//pkg2
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message");
 			  abort();
 		} 
-    else
-      printf(" transfer ok ret is %d \n", ret);  
-  
-	for(ret=4096;ret< 8192;ret++){
-			pwzpkg->load[ret-4096] = rx[ret-4096];
+		for(i=0;i<4096 ;i++){
+			pwzpkg->load[i+4096-12] = rx[i];
 		}  
 
-
+//pkg3
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message");
 			  abort();
 		} 
-    else
-      printf(" transfer ok ret is %d \n", ret);  
   
-	for(ret=8192;ret< 8192+4096;ret++){
-			pwzpkg->load[ret-8192] = rx[ret-8192];
+		for(i=0;i<4096;i++){
+			pwzpkg->load[i+2*4096-12] = rx[i];
 		}  
 
-
+//pkg4
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message");
 			  abort();
 		} 
-    else
-      printf(" transfer ok ret is %d \n", ret);  
   
-	for(ret=8192+4096;ret< 8192+8192;ret++){
-			pwzpkg->load[ret-12288] = rx[ret-8192-4096];
+		for(i=0;i<4096;i++){
+			pwzpkg->load[i+4096*3-12] = rx[i];
 		}  
 
+//pkg5
    tr.len =  extra_num ;  
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message for extra data");
 			  abort();
 		} 
-    else
-      printf(" transfer ok ret is %d \n", ret);  
- 
- 
-	 for(ret=8192+8192;ret < pwzpkg->lenLoad-pwzpkg->lenTail-2; ret++){
-			pwzpkg->load[ret-16384] = rx[ret-8192-8192];
+		int pos_tail = pwzpkg->lenLoad - pwzpkg->lenTail - 2 - 4*4096;
+		int pos_crc  = pwzpkg->lenLoad -2 - 4*4096;
+//		printf("pos_tail = %d,pos_crc = %d\n",pos_tail,pos_crc);
+	  for(i=0;i< pos_tail; i++){
+			pwzpkg->load[i+4*4096-12] = rx[i];
 		}  
-      printf(" feed load ok \n");
-
-  
-	 for(ret=pwzpkg->lenLoad-pwzpkg->lenTail-2;  ret< pwzpkg->lenLoad-2;  ret++){
-			pwzpkg->tail[ret-(pwzpkg->lenLoad-pwzpkg->lenTail-2)] = rx[ret-(pwzpkg->lenLoad-pwzpkg->lenTail-2)];
+	  for(i=pos_tail;  i<pos_crc;  i++){
+			pwzpkg->tail[i-pos_tail] = rx[i];
 		}  
-   
-      printf(" feed tail ok \n");  
-	 for(ret=pwzpkg->lenLoad-2;  ret< pwzpkg->lenLoad;  ret++){
-			pwzpkg->crc[ret-(pwzpkg->lenLoad-2)] = rx[ret- (pwzpkg->lenLoad-2)];
+	  for(i=pos_crc;  i< pos_crc+2;  i++){
+			pwzpkg->crc[i-pos_crc] = rx[i];
 		}  
-   
-      printf(" feed crc ok \n");  
- /*
-    for (ret = 0; ret < pwzpkg->lenLoad; ret++) {  
-        if (!(ret % 16))  
-            puts(" ");  
-        printf("%.2X ", rx[ret]);  
-    }  
-    puts(" ");
-*/  
 
 	return 0;
 }// 实现
