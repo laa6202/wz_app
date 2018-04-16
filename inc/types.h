@@ -1,8 +1,16 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
-
 typedef unsigned char UCHAR;
+
+
+typedef struct {
+//	char * device;// 
+	int   fd;
+  int   value;
+	UCHAR status;//返回状态  0--成功 1--失败  输出参数
+	UCHAR res;//   保留
+} KEY, *pKEY;
 
 typedef struct {
 	char * device;// "/dev/spidev0.0"--spi1     "/dev/spidev1.0"--spi2
