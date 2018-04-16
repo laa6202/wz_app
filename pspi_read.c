@@ -146,7 +146,7 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		}  
 
 //pkg5
-   tr.len =  extra_num ;  
+   	tr.len =  extra_num ;  
     ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
     if (ret < 1)  {
         printf("can't send spi message for extra data");
@@ -164,6 +164,8 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 	  for(i=pos_crc;  i< pos_crc+2;  i++){
 			pwzpkg->crc[i-pos_crc] = rx[i];
 		}  
+	
+		pwzpkg->index++;
 
 	return 0;
 }// 实现

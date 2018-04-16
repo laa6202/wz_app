@@ -25,10 +25,10 @@ int GetFn(char * fn,const CFG cfg){
 
 
 int SaveOneWZPKG(const CFG cfg,WZPKG wzpkg){
-	printf("......SaveOneWZPKG......\n");
+	//printf("......SaveOneWZPKG......\n");
 	char fn[250];
 	GetFn(fn,cfg);	
-	printf("save file name : %s\n",fn);
+//	printf("save file name : %s\n",fn);
 	FILE * fid = fopen(fn,"w");
 	WriteToFile(wzpkg,fid);		
 	fclose(fid);	

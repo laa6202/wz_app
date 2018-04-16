@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 #include "action.h"
 #include "types.h"
@@ -7,6 +8,7 @@
 #include "cspi_rw.h"
 #include "dir_save.h"
 #include "key_read.h"
+#include "wzpkg.h"
 
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
@@ -16,22 +18,22 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
 	static int index = 0;
-//	for(int i=0;i<40;i++)
-	{
+
 //		GenCmdPkgRdy(&cmdCheckPkg);	
 //		CspiRead(&cmdCheckPkg,&cSPI);
 //		ShowCMD(cmdCheckPkg);
 //		pkgRdy = CheckPkgRdy(cmdCheckPkg);
-//		ShowKey(pkey);
-		pkgRdy = KeyRead(pkey);
-//		ShowKey(pkey);
-		if(pkgRdy){
-			printf("index = %d \tpkgLen = %d\n",index++,wzpkg.lenLoad);
-			PspiRead(&wzpkg,&pSPI);
-		//	SaveSomeWZPKG(cfg,wzpkg,0);		
-			SaveOneWZPKG(cfg,wzpkg);		
-		}	
-	}
+	pkgRdy = KeyRead(pkey);
+	if(pkgRdy){
+		printf("index = %d \tpkgLen = %d\n",index++,wzpkg.lenLoad);
+		PspiRead(&wzpkg,&pSPI);
+		//SaveSomeWZPKG(cfg,wzpkg,0);		
+		int ret = CheckWZPKG(&wzpkg);
+		SaveOneWZPKG(cfg,wzpkg);		
+		if(ret == -1)
+			_exit(-1);
+	}	
+	
 	return 0;
 }
 
