@@ -8,7 +8,7 @@
 #include "dir_save.h"
 
 
-int action(CFG cfg,SPI cSPI,SPI pSPI){
+int action(CFG cfg,SPI cSPI,SPI pSPI,KEY key){
 	printf("...action...\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
@@ -18,10 +18,12 @@ int action(CFG cfg,SPI cSPI,SPI pSPI){
 	for(int i=0;i<4;i++)
 	{
 		printf("--- action main ---\n");
-		GenCmdPkgRdy(&cmdCheckPkg);	
-		CspiRead(&cmdCheckPkg,&cSPI);
-		ShowCMD(cmdCheckPkg);
-		pkgRdy = CheckPkgRdy(cmdCheckPkg);
+//		GenCmdPkgRdy(&cmdCheckPkg);	
+//		CspiRead(&cmdCheckPkg,&cSPI);
+//		ShowCMD(cmdCheckPkg);
+//		pkgRdy = CheckPkgRdy(cmdCheckPkg);
+//13910296310
+		pkgRdy = KeyRead(&key);
 		if(pkgRdy){
 			printf("pkgLen = %d\n",wzpkg.lenLoad);
 			PspiRead(&wzpkg,&pSPI);

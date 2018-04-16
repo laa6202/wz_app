@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-int action(CFG cfg,SPI,SPI);
+int action(CFG cfg,SPI,SPI,KEY);
 int ShowCMD(CMD);
 
 
