@@ -6,26 +6,28 @@
 #include "pspi_read.h"
 #include "cspi_rw.h"
 #include "dir_save.h"
+#include "key_read.h"
 
 
-int action(CFG cfg,SPI cSPI,SPI pSPI,KEY key){
+int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
 	printf("...action...\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
-//while(1)
-	for(int i=0;i<4;i++)
+	static int index = 0;
+//	for(int i=0;i<40;i++)
 	{
 		printf("--- action main ---\n");
 //		GenCmdPkgRdy(&cmdCheckPkg);	
 //		CspiRead(&cmdCheckPkg,&cSPI);
 //		ShowCMD(cmdCheckPkg);
 //		pkgRdy = CheckPkgRdy(cmdCheckPkg);
-//13910296310
-		pkgRdy = KeyRead(&key);
+//		ShowKey(pkey);
+		pkgRdy = KeyRead(pkey);
+//		ShowKey(pkey);
 		if(pkgRdy){
-			printf("pkgLen = %d\n",wzpkg.lenLoad);
+			printf("index = %d \tpkgLen = %d\n",index++,wzpkg.lenLoad);
 			PspiRead(&wzpkg,&pSPI);
 		//	SaveSomeWZPKG(cfg,wzpkg,0);		
 			SaveOneWZPKG(cfg,wzpkg);		
