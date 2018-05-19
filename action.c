@@ -9,9 +9,10 @@
 #include "dir_save.h"
 #include "key_read.h"
 #include "wzpkg.h"
+#include "send_to_net.h"
 
 
-int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
+int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 	printf("--- action main ---\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
@@ -29,7 +30,9 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey){
 		PspiRead(&wzpkg,&pSPI);
 		//SaveSomeWZPKG(cfg,wzpkg,0);		
 		int ret = CheckWZPKG(&wzpkg);
-		SaveOneWZPKG(cfg,wzpkg);		
+		SaveOneWZPKG(cfg,wzpkg);	
+    SendOneWZPKG(sock,wzpkg);	
+   // echo_cli(sock); 
 		if(ret == -1)
 			_exit(-1);
 	}	

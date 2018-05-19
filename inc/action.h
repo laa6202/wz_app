@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-int action(CFG cfg,SPI,SPI,pKEY);
+int action(CFG cfg,SPI,SPI,pKEY,int sock);
 int ShowCMD(CMD);
 
 
