@@ -31,7 +31,7 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 		//SaveSomeWZPKG(cfg,wzpkg,0);		
 		int ret = CheckWZPKG(&wzpkg);
 		SaveOneWZPKG(cfg,wzpkg);	
-    SendOneWZPKG(sock,wzpkg);	
+    SendOneWZPKG(cfg,sock,wzpkg);	
    // echo_cli(sock); 
 		if(ret == -1)
 			_exit(-1);

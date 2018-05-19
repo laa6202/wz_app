@@ -12,8 +12,8 @@
 #include "types.h"
 #include "send_to_net.h"
 
-#define MYPORT 8887  
-char* SERVERIP = "192.168.1.104";
+int   MYPORT = 8887 ;
+char SERVERIP[20] = "192.168.1.104";
   
   
 #define ERR_EXIT(m) \
@@ -109,8 +109,14 @@ int GetNet(char * fn,const CFG cfg)
 }
 
 
-int SendOneWZPKG(int sock,WZPKG wzpkg)
+int SendOneWZPKG(CFG cfg,int sock,WZPKG wzpkg)
 {
+
+	int port = cfg.remoteHost.port;
+	char *ip;
+	ip = cfg.remoteHost.ip;
+   MYPORT = port;
+   strcpy(SERVERIP, ip);
 
    echo_cli(sock,wzpkg);  
 /*
