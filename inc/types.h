@@ -69,6 +69,7 @@ typedef struct {
 	char  fNameDef[250];
 	char	fNameSeed[250];
 	int 	fUsedID;
+	int 	noCheck;
 	FDIR	fileDir;
 	RHOST remoteHost;
 } CFG, *pCFG;

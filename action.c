@@ -26,14 +26,14 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 //		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 	pkgRdy = KeyRead(pkey);
 	if(pkgRdy){
-		printf("index = %d \tpkgLen = %d\n",index++,wzpkg.lenLoad);
+		printf("index = %d \tDevid = %02x\tpkgLen = %d\n",index++,wzpkg.head[1],wzpkg.lenLoad);
 		PspiRead(&wzpkg,&pSPI);
 		//SaveSomeWZPKG(cfg,wzpkg,0);		
 		int ret = CheckWZPKG(&wzpkg);
 		SaveOneWZPKG(cfg,wzpkg);	
     SendOneWZPKG(cfg,sock,wzpkg);	
    // echo_cli(sock); 
-		if(ret == -1)
+		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
 	}	
 	

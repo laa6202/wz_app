@@ -37,9 +37,10 @@ int CheckCfgFileExist(char * fn){
 
 
 int SetDefaultCfg(pCFG pcfg){
+	pcfg->noCheck = 1;
 //default Remote host 
-	pcfg->remoteHost.port = 8080;
-	strcpy(pcfg->remoteHost.ip,"192.168.0.3");
+	pcfg->remoteHost.port = 8887;
+	strcpy(pcfg->remoteHost.ip,"192.168.0.121");
 	pcfg->remoteHost.status = 0;
 	pcfg->remoteHost.pushOrNot = 0;
 //default direction save file name
@@ -104,6 +105,10 @@ int SeperateKey(char * key,char* value,const char * txtLine){
 
 
 int SetKeyValue(pCFG pcfg,const char *key,const char * value){
+//global 
+	if(strcmp(key,"noCheck") == 0)
+		pcfg->noCheck = atoi(value);
+
 //remoteHost
 	if(strcmp(key,"remoteHost.ip")==0)
 		strcpy(pcfg->remoteHost.ip,value);
@@ -133,6 +138,7 @@ int SetKeyValue(pCFG pcfg,const char *key,const char * value){
 
 
 int ShowAllCfg(const CFG cfg){
+	printf("noCkeck = %d\n",cfg.noCheck);
 //remoteHost
 	printf("remoteHost.ip = %s\n",cfg.remoteHost.ip);
 	printf("remoteHost.port = %d\n",cfg.remoteHost.port);
