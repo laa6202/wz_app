@@ -78,6 +78,6 @@ unsigned char * CloneWZPKG2Array(WZPKG src,int * lenU8){
 		*(dst+i+12+18000+lenTail) = src.crc[i];
 //		printf("%02x ",*(dst+i+18012+lenTail));
 	}
-	printf("\n");
+//	printf("\n");
 	return dst;
 }

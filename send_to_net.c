@@ -56,7 +56,7 @@ void echo_cli(int sock,WZPKG wzpkg)
 		
     if(1) //  while (fgets(sendbuf, sizeof(sendbuf), stdin) != NULL)  
     {  
-       printf("向服务器发送\n"); 
+       printf("......向 %s:%d 发送 OK ......\n",SERVERIP,MYPORT); 
 //       printf("head is %d \n",sizeof(wzpkg.head));
   //     printf("load is %d \n",sizeof(wzpkg.load)); 
     //   printf("tail is %d \n",sizeof(wzpkg.tail)); 
