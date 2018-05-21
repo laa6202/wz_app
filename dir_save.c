@@ -32,7 +32,7 @@ int SaveOneWZPKG(const CFG cfg,WZPKG wzpkg){
 	FILE * fid = fopen(fn,"w");
 	WriteToFile(wzpkg,fid);		
 	fclose(fid);	
-	printf("......SaveOneWZPKG OK ......\n");
+//	printf("......SaveOneWZPKG OK ......\n");
 	return 0;
 }
 

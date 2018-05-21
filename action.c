@@ -30,7 +30,8 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 		PspiRead(&wzpkg,&pSPI);
 		ShowPKGInfo(index++,wzpkg);
 		//SaveSomeWZPKG(cfg,wzpkg,0);		
-		int ret = CheckWZPKG(&wzpkg);
+		int ret;
+		ret = CheckWZPKG(&wzpkg);
 		SaveOneWZPKG(cfg,wzpkg);	
     SendOneWZPKG(cfg,sock,wzpkg);	
 		ShowStat(cfg,wzpkg,ret);

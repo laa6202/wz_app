@@ -49,35 +49,11 @@ void echo_cli(int sock,WZPKG wzpkg)
 			sendbuf[ret+18012]= wzpkg.tail[ret];
     for(ret = 0; ret < 2; ret++)
 			sendbuf[ret+18060]= wzpkg.crc[ret];
-//    memcpy(sendbuf,wzpkg.head,sizeof(wzpkg.head));
-//    memcpy(sendbuf,wzpkg.load,sizeof(wzpkg.load));
-  //  memcpy(sendbuf+sizeof(wzpkg.head)+sizeof(wzpkg.load),wzpkg.tail,sizeof(wzpkg.tail));
-  //  memcpy(sendbuf+sizeof(wzpkg.head)+sizeof(wzpkg.load)+sizeof(wzpkg.tail),wzpkg.crc,sizeof(wzpkg.crc));
 		
     if(1) //  while (fgets(sendbuf, sizeof(sendbuf), stdin) != NULL)  
     {  
-       printf("......向 %s:%d 发送 OK ......\n",SERVERIP,MYPORT); 
-//       printf("head is %d \n",sizeof(wzpkg.head));
-  //     printf("load is %d \n",sizeof(wzpkg.load)); 
-    //   printf("tail is %d \n",sizeof(wzpkg.tail)); 
-       
-    //   printf("crc is %d \n",sizeof(wzpkg.crc)); 
+//       printf("......向 %s:%d 发送 OK ......\n",SERVERIP,MYPORT); 
     sendto(sock, sendbuf, 18062, 0, (struct sockaddr *)&servaddr, sizeof(servaddr));  
-// sendto(sock, wzpkg.head, sizeof(wzpkg.head), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));  
- //sendto(sock, wzpkg.load, sizeof(wzpkg.load), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));  
-// sendto(sock, wzpkg.tail, sizeof(wzpkg.tail), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));  
-
-// sendto(sock, wzpkg.crc, sizeof(wzpkg.crc), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));  
-     /*  
-        ret = recvfrom(sock, recvbuf, sizeof(recvbuf), 0, NULL, NULL);  
-        if (ret == -1)  
-        {  
-            if (errno == EINTR)  
-                continue;  
-            ERR_EXIT("recvfrom");  
-        }  
-        printf("从服务器接收：%s\n",recvbuf);  
-          */
         memset(sendbuf, 0, sizeof(sendbuf));  
         memset(recvbuf, 0, sizeof(recvbuf));  
     }  
@@ -98,13 +74,6 @@ int SendToNet(const WZPKG wzpkg,FILE * fid)
 
 int GetNet(char * fn,const CFG cfg)
 {
-  /*
-	int fUsedID = cfg.fileDir.fUsedID;
-	if(fUsedID == 0)
-		strcpy(fn,cfg.fileDir.fNameDef);
-	else
-		strcpy(fn,cfg.fileDir.fName);
-  */
 	return 0;
 }
 
@@ -119,16 +88,6 @@ int SendOneWZPKG(CFG cfg,int sock,WZPKG wzpkg)
    strcpy(SERVERIP, ip);
 
    echo_cli(sock,wzpkg);  
-/*
-	//printf("......SaveOneWZPKG......\n");
-	char fn[250];
-	GetFn(fn,cfg);	
-//	printf("save file name : %s\n",fn);
-	FILE * fid = fopen(fn,"w");
-	WriteToFile(wzpkg,fid);		
-	fclose(fid);	
-	printf("......SendOneWZPKG OK ......\n");
-*/
 	return 0;
 }
 

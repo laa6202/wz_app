@@ -43,8 +43,10 @@ int CheckWZPKG(pWZPKG src){
 		a = a & 0xff;
 		sum += a;
 	}
+	free(wzU8);
 	if(sum == crc){
 		printf("......CheckWZPKG OK ......\n");
+	;
 	}
 	else {
 		printf("sum = %04x,crc = %04x\n",sum,crc);
