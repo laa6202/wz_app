@@ -18,7 +18,9 @@ int main(int argc, char **argv){
 	InitWZPKG(&wzpkg);
 	TestTime();
 
-	for(int i=0;i<100;i++){
+	int i=0;
+//	for(;i<100;i++)
+	{
 
 		GenTestWZPKG(&wzpkg,i%3);
 		ShowWZPKGInfo(&wzpkg);

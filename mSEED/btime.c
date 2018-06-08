@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <time.h>
 
+#include "types.h"
+#include "mtypes.h"
+#include "btime.h"
+
+
 int TestTime(){
 	printf("TestTime...\n");
 	time_t now;
@@ -26,3 +31,10 @@ int TestTime(){
 	printf("cMod2 = %s",cMod2);
 	return 0;
 }
+
+
+int CovWZ2BTIME(pBTIME pbtime,WZPKG wzpkg){
+
+
+}
+
