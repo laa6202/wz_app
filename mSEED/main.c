@@ -8,11 +8,18 @@
 #include "mtypes.h"
 #include "action_mseed.h"
 #include "buf4mseed.h"
+#include "btime.h"
+
 
 int main(int argc, char **argv){
 	printf("The tb of mSEED project\n");
 	WZPKG wzpkg;
+
+	InitWZPKG(&wzpkg);
+	TestTime();
+
 	for(int i=0;i<100;i++){
+
 		GenTestWZPKG(&wzpkg,i%3);
 		ShowWZPKGInfo(&wzpkg);
 		
