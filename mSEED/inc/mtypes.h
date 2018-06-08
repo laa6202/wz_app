@@ -1,6 +1,9 @@
 #ifndef __MTYPES_H
 #define __MTYPES_H
 
+#define LEN_PACK 60000
+#define NUM_DEV  20
+
 typedef unsigned char U8;
 typedef unsigned int  U32;
 typedef unsigned short U16;
@@ -78,5 +81,21 @@ typedef struct{
 }	PACK,*pPACK;
 
 
+typedef struct{
+	int len;
+	int pos;
+	S32	x[LEN_PACK];
+	S32 y[LEN_PACK];
+	S32 z[LEN_PACK];
+} RAW,*pRAW;
+
+
+typedef struct{
+	pRAW praw[NUM_DEV];
+}	RAWALL,*pRAWALL;
+
+
 
 #endif
+
+

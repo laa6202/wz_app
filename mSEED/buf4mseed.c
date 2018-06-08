@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "types.h"
 
@@ -15,14 +16,26 @@ int InitWZPKG(pWZPKG pwzpkg){
 }
 
 
-int GenTestWZPKG(pWZPKG pwzpkg,int ch){
+int InitRawAll(pRAWALL pRawAll){
+//	printf("sizeof RAWALL = %ld\n",sizeof(RAWALL));
+	for(int i=0;i<NUM_DEV;i++)
+	{
+		pRawAll->praw[i] = (pRAW)malloc(sizeof(RAW));	
+		memset(pRawAll->praw[i],0,sizeof(RAW));
+		pRawAll->praw[i]->len = LEN_PACK;
+	}
+	return 0;
+}
+
+
+int GenTestWZPKG(pWZPKG pwzpkg,int dev_id){
 	int index = pwzpkg->index;
 	int start_utc = START_UTC + index * 30;
 	int start_ns  = START_NS;
 	pwzpkg->lenLoad = 18062;
 	pwzpkg->lenTail = 48;
 	pwzpkg->head[0] = 0x51;
-	pwzpkg->head[1] = (ch & 0xff);
+	pwzpkg->head[1] = (dev_id & 0xff);
 	pwzpkg->head[2] = 0x47;
 	pwzpkg->head[3] = 0x02;
 	pwzpkg->head[4] = ((start_utc & 0xff000000) >> 24);
@@ -37,9 +50,17 @@ int GenTestWZPKG(pWZPKG pwzpkg,int ch){
 	int x,y,z;
 	for (int i=0;i<2000;i++){
 		x = i*10;
+		y = i * 15 + 5;
+		z = i * 12 - 45;
 		pwzpkg->load[i*9] = (x & 0xff0000) >> 16;	
 		pwzpkg->load[i*9+1] = (x & 0xff00) >> 8;	
 		pwzpkg->load[i*9+2] = (x & 0xff);	
+		pwzpkg->load[i*9+3] = (y & 0xff0000) >> 16;	
+		pwzpkg->load[i*9+4] = (y & 0xff00) >> 8;	
+		pwzpkg->load[i*9+5] = (y & 0xff);	
+		pwzpkg->load[i*9+6] = (z & 0xff0000) >> 16;	
+		pwzpkg->load[i*9+7] = (z & 0xff00) >> 8;	
+		pwzpkg->load[i*9+8] = (z & 0xff);	
 	}
 	pwzpkg->index++;
 	return 0;
@@ -59,5 +80,36 @@ int ShowWZPKGInfo(pWZPKG pwzpkg){
 	}
 	return 0;
 }
+
+
+int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
+	int did = wzpkg.head[1];
+//	printf("dev_id = %d\t",did);
+	int pos = prawAll->praw[did]->pos;
+	int x,y,z;
+	int finish = 0;
+	for(int i=0;i<2000;i++)
+	{
+		x = (wzpkg.load[9*i]<<16) | (wzpkg.load[9*i+1]<<8);
+		x += wzpkg.load[9*i+2];
+		y = (wzpkg.load[9*i+3]<<16) | (wzpkg.load[9*i+4]<<8);
+		y += wzpkg.load[9*i+5];
+		z = (wzpkg.load[9*i+6]<<16) | (wzpkg.load[9*i+7]<<8);
+		z += wzpkg.load[9*i+8];
+		prawAll->praw[did]->x[pos+i] = x;
+		prawAll->praw[did]->y[pos+i] = y;
+		prawAll->praw[did]->z[pos+i] = z;
+	}
+	prawAll->praw[did]->pos += 2000;
+	if(prawAll->praw[did]->pos >= 60000)
+	{
+		prawAll->praw[did]->pos %= 60000;
+		finish = did;
+	}
+//	printf("pos = %d\n",prawAll->praw[did]->pos);
+
+	return finish;
+}
+
 
 
