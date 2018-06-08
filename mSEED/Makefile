@@ -2,17 +2,17 @@
 CC=gcc 
 FLAG= -std=c99
 LIB=
-INCDIR=inc
+INCDIR=inc -I ../inc
 OUTDIR=out
 TAR=mSEED
-SRC=main.c action_mseed.c
-#		config_analyze.c	\
+SRC=main.c action_mseed.c \
+		buf4mseed.c	
 #		cmd_op.c	\
 #		cspi_rw.c pspi_read.c key_read.c\
 #		wzpkg.c \
 #		dir_save.c send_to_net.c
-OBJ=main.o action_mseed.o
-#		config_analyze.o			\
+OBJ=main.o action_mseed.o  \
+		buf4mseed.o			
 #		cmd_op.o \
 #		cspi_rw.o pspi_read.o key_read.o\
 #		wzpkg.o \
