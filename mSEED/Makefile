@@ -5,13 +5,13 @@ LIB=
 INCDIR=inc
 OUTDIR=out
 TAR=mSEED
-SRC=main.c 
+SRC=main.c action_mseed.c
 #		config_analyze.c	\
 #		cmd_op.c	\
 #		cspi_rw.c pspi_read.c key_read.c\
 #		wzpkg.c \
 #		dir_save.c send_to_net.c
-OBJ=main.o
+OBJ=main.o action_mseed.o
 #		config_analyze.o			\
 #		cmd_op.o \
 #		cspi_rw.o pspi_read.o key_read.o\
