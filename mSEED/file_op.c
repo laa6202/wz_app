@@ -35,27 +35,34 @@ int FnChannel(char *fn,int ch){
 }
 
 
-int FnIndex(char *fn){
-	static int fIndex;
-	char cIndex[8];
-	memset(cIndex,0,8);
-	sprintf(cIndex,"%07d",fIndex);
-	printf("fIndex = %s\n",cIndex);
-	strcat(fn,cIndex);
-	fIndex ++;
+int CIndex(char *cIndex,int did){
+	static int index[20];
+	sprintf(cIndex,"_%07d",index[did-1]);
+	index[did-1] ++;
+	if(index[did-1] >= 1000000)
+		index[did-1] = 0;
 	return 0;
 }
 
 
-int FnMSeed(char * fnMSeed,int ch, const char * fnCfg){
-	char fn[200];
-	memset(fn,0,200);
-	FnBase(fn,fnCfg);
-	FnChannel(fn,ch);
-	FnIndex(fn);
-	strcpy(fnMSeed,fn);
-	strcat(fnMSeed,".mseed");
-	printf("fnMSeed = %s\n",fnMSeed);
+int FnMSeed(char * fnX,char * fnY,char *fnZ, int did,const char * fnCfg){
+	char cIndex[10];
+	memset(cIndex,0,10);
+	CIndex(cIndex,did);	
+	
+	FnBase(fnX,fnCfg);
+	FnBase(fnY,fnCfg);
+	FnBase(fnZ,fnCfg);
+	FnChannel(fnX,0);
+	FnChannel(fnY,1);
+	FnChannel(fnZ,2);
+	strcat(fnX,cIndex);
+	strcat(fnY,cIndex);
+	strcat(fnZ,cIndex);
+	strcat(fnX,".mseed");
+	strcat(fnY,".mseed");
+	strcat(fnZ,".mseed");
+	printf("fnX = %s\tfnY = %s\tfnZ = %s\n",fnX,fnY,fnZ);
 	return 0;
 }
 

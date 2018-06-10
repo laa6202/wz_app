@@ -18,23 +18,25 @@ int main(int argc, char **argv){
 	printf("The tb of mSEED project\n");
 	WZPKG wzpkg;
 	RAWALL rawAll;
-	char fnMSeed[200];
+	char fnMSeedX[200];
+	char fnMSeedY[200];
+	char fnMSeedZ[200];
 
 
 	InitWZPKG(&wzpkg);
 	InitRawAll(&rawAll);
 
 	int i=0;
-	for(;i<100;i++)
+	for(;i<1000;i++)
 	{
 
 		GenTestWZPKG(&wzpkg,i%3+2);
 //		ShowWZPKGInfo(&wzpkg);
-		int finish = BufWZPKG2Raw(&rawAll,wzpkg);	
-		if(finish)
+		int did = BufWZPKG2Raw(&rawAll,wzpkg);	
+		if(did)
 		{
-			printf("finish = %d,i = %d\n",finish,i);
-			FnMSeed(fnMSeed,0,NULL);
+			printf("finish device id = %d,i = %d\n",did,i);
+			FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);
 		}	
 	}
 	return 0;
