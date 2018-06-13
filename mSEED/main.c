@@ -6,7 +6,7 @@
 #include "types.h"
 
 #include "mtypes.h"
-#include "action_mseed.h"
+#include "action.h"
 #include "buf4mseed.h"
 #include "btime.h"
 #include "file_op.h"
@@ -18,6 +18,7 @@ int main(int argc, char **argv){
 	printf("The tb of mSEED project\n");
 	WZPKG wzpkg;
 	RAWALL rawAll;
+	CFGALL cfgAll;
 	char fnMSeedX[200];
 	char fnMSeedY[200];
 	char fnMSeedZ[200];
@@ -25,18 +26,19 @@ int main(int argc, char **argv){
 
 	InitWZPKG(&wzpkg);
 	InitRawAll(&rawAll);
+	InitCfgAll(&cfgAll);
 
 	int i=0;
-	for(;i<1000;i++)
+	for(;i<100;i++)
 	{
 
 		GenTestWZPKG(&wzpkg,i%3+2);
 //		ShowWZPKGInfo(&wzpkg);
 		int did = BufWZPKG2Raw(&rawAll,wzpkg);	
-		if(did)
+
+		if(did != 0)
 		{
-			printf("finish device id = %d,i = %d\n",did,i);
-			FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);
+			Action(did,rawAll,cfgAll);
 		}	
 	}
 	return 0;

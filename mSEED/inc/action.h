@@ -3,6 +3,8 @@
 
 int TestStruct(void);
 
+int InitCfgAll(pCFGALL);
+int Action(int,RAWALL,CFGALL);
 
 #endif
 

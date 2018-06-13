@@ -67,6 +67,7 @@ typedef struct{
 	U32 W[16];
 }	FRAME,*pFRAME;
 
+
 typedef struct{
 	HEAD head;
 	BLOCK0 block0;
@@ -93,6 +94,14 @@ typedef struct{
 typedef struct{
 	pRAW praw[NUM_DEV];
 }	RAWALL,*pRAWALL;
+
+
+typedef struct{
+	float posX;
+	float posY;
+}	CFGALL, *pCFGALL;
+
+
 
 
 

@@ -9,7 +9,7 @@
 
 int FnBase(char * fn,const char * fnCfg){
 	if(fnCfg ==NULL){
-		char fnDef[] = "XX_SLT";
+		char fnDef[] = "DAT/XX_SLT";
 		strcpy(fn,fnDef);	
 	}
 	else{
