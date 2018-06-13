@@ -5,6 +5,8 @@
 
 int GenMSeed(int,int,RAWALL,const char*);
 
+int GenHead(const char *fn,RAWALL,int);
+
 
 #endif
 

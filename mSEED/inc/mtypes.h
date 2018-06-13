@@ -84,6 +84,8 @@ typedef struct{
 
 typedef struct{
 	int len;
+	U32 utc;
+	U32 ns;
 	int pos;
 	S32	x[LEN_PACK];
 	S32 y[LEN_PACK];

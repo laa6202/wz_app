@@ -83,11 +83,23 @@ int ShowWZPKGInfo(pWZPKG pwzpkg){
 
 
 int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
+	pWZPKG pwzpkg = &wzpkg;
 	int did = wzpkg.head[1];
 //	printf("dev_id = %d\t",did);
 	int pos = prawAll->praw[did]->pos;
 	int x,y,z;
 	int finish = 0;
+
+	if(pos == 0){
+		int utc = (pwzpkg->head[4] << 24 ) | (pwzpkg->head[5] << 16);
+		utc += (pwzpkg->head[6] << 8);
+		utc += (pwzpkg->head[7]);	
+		int ns = (pwzpkg->head[8] << 24 ) | (pwzpkg->head[9] << 16);
+		ns += (pwzpkg->head[10] << 8);
+		ns += (pwzpkg->head[11]);	
+		prawAll->praw[did]->utc = utc;
+		prawAll->praw[did]->ns  = ns;
+	}
 	for(int i=0;i<2000;i++)
 	{
 		x = (wzpkg.load[9*i]<<16) | (wzpkg.load[9*i+1]<<8);

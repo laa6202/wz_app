@@ -11,7 +11,16 @@
 
 int GenMSeed(int did,int ch,RAWALL rawAll,const char * fn){
 	printf("...GenMSeed dir = %d\tch = %d\tfn= %s\n",did,ch,fn);
-
+	GenHead(fn,rawAll,did);
+	
 	return 0;
 }
 
+
+
+int GenHead(const char * fn,RAWALL rawAll,int did){
+//	int utc = rawAll->.utc;
+	printf("utc = \n");
+
+	return 0;
+}
