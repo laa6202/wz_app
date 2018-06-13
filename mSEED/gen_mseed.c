@@ -9,8 +9,8 @@
 #include "file_op.h"
 
 
-int GenMSeed(int did,RAWALL rawAll,const char * fnX,const char *fnY,const char * fnZ){
-	printf("...GenMSeed dir = %d\t\n",did);
+int GenMSeed(int did,int ch,RAWALL rawAll,const char * fn){
+	printf("...GenMSeed dir = %d\tch = %d\tfn= %s\n",did,ch,fn);
 
 	return 0;
 }

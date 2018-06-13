@@ -62,7 +62,7 @@ int FnMSeed(char * fnX,char * fnY,char *fnZ, int did,const char * fnCfg){
 	strcat(fnX,".mseed");
 	strcat(fnY,".mseed");
 	strcat(fnZ,".mseed");
-	printf("fnX = %s\tfnY = %s\tfnZ = %s\n",fnX,fnY,fnZ);
+//	printf("fnX = %s\tfnY = %s\tfnZ = %s\n",fnX,fnY,fnZ);
 	return 0;
 }
 

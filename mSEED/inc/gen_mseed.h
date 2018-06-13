@@ -3,7 +3,7 @@
 
 #include "mtypes.h"
 
-int GenMSeed(int,RAWALL,const char*,const char*,const char*);
+int GenMSeed(int,int,RAWALL,const char*);
 
 
 #endif

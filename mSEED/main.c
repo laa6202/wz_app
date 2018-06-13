@@ -29,14 +29,14 @@ int main(int argc, char **argv){
 	InitCfgAll(&cfgAll);
 
 	int i=0;
-	for(;i<100;i++)
+	for(;i<300;i++)
 	{
 
 		GenTestWZPKG(&wzpkg,i%3+2);
 //		ShowWZPKGInfo(&wzpkg);
 		int did = BufWZPKG2Raw(&rawAll,wzpkg);	
 
-		if(did != 0)
+		if(did == 2)		//only handle device 2
 		{
 			Action(did,rawAll,cfgAll);
 		}	

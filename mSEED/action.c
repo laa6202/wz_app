@@ -38,7 +38,7 @@ int Action(int did,RAWALL rawAll,CFGALL cfgAll){
 	char fnMSeedZ[200];	memset(fnMSeedZ,0,200);
 
 	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
-
+	GenMSeed(did,0,rawAll,fnMSeedX);
 	return 0;
 }
 
