@@ -86,7 +86,7 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 	pWZPKG pwzpkg = &wzpkg;
 	int did = wzpkg.head[1];
 //	printf("dev_id = %d\t",did);
-	int pos = prawAll->praw[did]->pos;
+	int pos = prawAll->praw[did]->pos_buf;
 	int x,y,z;
 	int finish = 0;
 
@@ -112,10 +112,10 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		prawAll->praw[did]->y[pos+i] = y;
 		prawAll->praw[did]->z[pos+i] = z;
 	}
-	prawAll->praw[did]->pos += 2000;
-	if(prawAll->praw[did]->pos >= 60000)
+	prawAll->praw[did]->pos_buf += 2000;
+	if(prawAll->praw[did]->pos_buf >= 60000)
 	{
-		prawAll->praw[did]->pos %= 60000;
+		prawAll->praw[did]->pos_buf %= 60000;
 		finish = did;
 	}
 //	printf("pos = %d\n",prawAll->praw[did]->pos);
