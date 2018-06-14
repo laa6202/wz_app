@@ -10,17 +10,80 @@
 
 
 int GenMSeed(int did,int ch,RAWALL rawAll,const char * fn){
-	printf("...GenMSeed dir = %d\tch = %d\tfn= %s\n",did,ch,fn);
-	GenHead(fn,rawAll,did);
-	
+	printf("...GenMSeed did = %d\tch = %d\tfn= %s\n",did,ch,fn);
+	int eof = 0;
+	while(eof == 0) 
+	{
+		GenPack(fn,rawAll,did,ch);
+		eof = EofPack(rawAll,did,ch);	
+	}
 	return 0;
 }
 
 
+int GenPack(const char *fn,RAWALL rawAll,int did,int ch){
+	static int index = 0;
+	printf("...GenPack index = %d\n",index);
 
-int GenHead(const char * fn,RAWALL rawAll,int did){
+	GenHead(fn,rawAll,did,ch);
+	GenBlock0(fn,rawAll,did,ch);
+	GenBlock1(fn,rawAll,did,ch);
+	GenFrame0(fn,rawAll,did,ch);
+	GenFrames(fn,rawAll,did,ch);
+
+	index++;
+	return 0;
+} 
+
+
+int EofPack(RAWALL rawAll,int did,int ch){
+
+
+	return 1;
+}
+
+
+int GenHead(const char * fn,RAWALL rawAll,int did,int ch){
 //	int utc = rawAll->.utc;
-	printf("utc = \n");
+	printf("......utc = \n");
 
 	return 0;
 }
+
+
+
+int GenBlock0(const char * fn,RAWALL rawAll,int did,int ch){
+	printf("......Block0 = \n");
+
+
+	return 0;
+}
+
+
+
+
+int GenBlock1(const char * fn,RAWALL rawAll,int did,int ch){
+	printf("......Block1 = \n");
+
+	return 0;
+}
+
+
+int GenFrame0(const char *fn,RAWALL rawAll,int did,int ch){
+	printf("......Frame0 = \n");
+
+
+	return 0;
+}
+
+
+
+int GenFrames(const char *fn,RAWALL rawAll,int did,int ch){
+	printf("......Frames = \n");
+
+	return 0;
+}
+
+
+
+

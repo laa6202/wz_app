@@ -36,10 +36,14 @@ int main(int argc, char **argv){
 //		ShowWZPKGInfo(&wzpkg);
 		int did = BufWZPKG2Raw(&rawAll,wzpkg);	
 
-		if(did == 2)		//only handle device 2
+		switch(did)
 		{
-			Action(did,rawAll,cfgAll);
+			case 2 : Action(did,rawAll,cfgAll); break;
+			case 3 : Action(did,rawAll,cfgAll); break;
+			case 4 : Action(did,rawAll,cfgAll); break;
+			default : ;
 		}	
+		
 	}
 	return 0;
 }
