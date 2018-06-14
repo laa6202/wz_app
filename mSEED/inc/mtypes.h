@@ -87,7 +87,9 @@ typedef struct{
 	U32 utc;
 	U32 ns;
 	int pos_buf;
-	int pos_cal;
+	int pos_chx;
+	int pos_chy;
+	int pos_chz;
 	S32	x[LEN_PACK];
 	S32 y[LEN_PACK];
 	S32 z[LEN_PACK];

@@ -1,5 +1,6 @@
 //action.c
 //ACtion the module when buf ready,example 30sec one file.
+//Action handle 1 device,gen 3 channel files
 
 #include <stdio.h>
 #include <string.h>
@@ -40,8 +41,8 @@ int Action(int did,pRAWALL prawAll,CFGALL cfgAll){
 
 	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
 	GenMSeed(did,0,prawAll,fnMSeedX);
-	GenMSeed(did,1,prawAll,fnMSeedY);
-	GenMSeed(did,2,prawAll,fnMSeedZ);
+//	GenMSeed(did,1,prawAll,fnMSeedY);
+//	GenMSeed(did,2,prawAll,fnMSeedZ);
 	return 0;
 }
 

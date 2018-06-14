@@ -29,7 +29,7 @@ int main(int argc, char **argv){
 	InitCfgAll(&cfgAll);
 
 	int i=0;
-	for(;i<300;i++)
+	for(;i<100;i++)
 	{
 
 		GenTestWZPKG(&wzpkg,i%3+2);
@@ -39,8 +39,8 @@ int main(int argc, char **argv){
 		switch(did)
 		{
 			case 2 : Action(did,&rawAll,cfgAll); break;
-			case 3 : Action(did,&rawAll,cfgAll); break;
-			case 4 : Action(did,&rawAll,cfgAll); break;
+//			case 3 : Action(did,&rawAll,cfgAll); break;
+//			case 4 : Action(did,&rawAll,cfgAll); break;
 			default : ;
 		}	
 		

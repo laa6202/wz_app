@@ -1,5 +1,7 @@
 //gen_mseed.c
 //Gen mseed packages and save file.
+//GenMSeed handle 1 device and 1 channel,as gen 1 file per call.
+
 
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +22,7 @@ int GenMSeed(int did,int ch,pRAWALL prawAll,const char * fn){
 	while(eof == 0) 
 	{
 		GenPack(fn,prawAll,did,ch);
+		GenPack(fn,prawAll,did,ch);
 		eof = EofPack(prawAll,did,ch);	
 	}
 	return 0;
@@ -27,8 +30,7 @@ int GenMSeed(int did,int ch,pRAWALL prawAll,const char * fn){
 
 
 int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
-	static int index = 0;
-	printf("...GenPack index = %d\n",index);
+	printf("...GenPack did = %d\tch = %d\n",did,ch);
 
 	GenHead(fn,prawAll,did,ch);
 	GenBlock0(fn,prawAll,did,ch);
@@ -36,7 +38,6 @@ int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
 	GenFrame0(fn,prawAll,did,ch);
 	GenFrames(fn,prawAll,did,ch);
 
-	index++;
 	return 0;
 } 
 
@@ -87,8 +88,20 @@ int GenBlock1(const char * fn,pRAWALL prawAll,int did,int ch){
 
 int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 	printf("......Frame0 = \n");
+	static int pos;
+
 	FRAME frm0;
 	memset(&frm0,0,sizeof(FRAME));
+	
+	if(ch==0) pos = prawAll->praw[did]->pos_chx;
+	else if(ch==1) pos = prawAll->praw[did]->pos_chy;
+	else if(ch==2) pos = prawAll->praw[did]->pos_chz;
+
+	pos = GetFrame0(&frm0,prawAll,did,ch,pos);
+
+	if(ch==0) prawAll->praw[did]->pos_chx = pos;
+	else if(ch==1) prawAll->praw[did]->pos_chy = pos;
+	else if(ch==2) prawAll->praw[did]->pos_chz = pos;
 
 	TestAlg();
 
