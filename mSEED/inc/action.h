@@ -4,7 +4,7 @@
 int TestStruct(void);
 
 int InitCfgAll(pCFGALL);
-int Action(int,RAWALL,CFGALL);
+int Action(int,pRAWALL,CFGALL);
 
 #endif
 

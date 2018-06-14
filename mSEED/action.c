@@ -33,15 +33,15 @@ int InitCfgAll(pCFGALL pcfgAll){
 };
 
 
-int Action(int did,RAWALL rawAll,CFGALL cfgAll){
+int Action(int did,pRAWALL prawAll,CFGALL cfgAll){
 	char fnMSeedX[200];	memset(fnMSeedX,0,200);	
 	char fnMSeedY[200];	memset(fnMSeedY,0,200);	
 	char fnMSeedZ[200];	memset(fnMSeedZ,0,200);
 
 	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
-	GenMSeed(did,0,rawAll,fnMSeedX);
-	GenMSeed(did,1,rawAll,fnMSeedY);
-	GenMSeed(did,2,rawAll,fnMSeedZ);
+	GenMSeed(did,0,prawAll,fnMSeedX);
+	GenMSeed(did,1,prawAll,fnMSeedY);
+	GenMSeed(did,2,prawAll,fnMSeedZ);
 	return 0;
 }
 

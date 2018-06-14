@@ -38,9 +38,9 @@ int main(int argc, char **argv){
 
 		switch(did)
 		{
-			case 2 : Action(did,rawAll,cfgAll); break;
-			case 3 : Action(did,rawAll,cfgAll); break;
-			case 4 : Action(did,rawAll,cfgAll); break;
+			case 2 : Action(did,&rawAll,cfgAll); break;
+			case 3 : Action(did,&rawAll,cfgAll); break;
+			case 4 : Action(did,&rawAll,cfgAll); break;
 			default : ;
 		}	
 		
