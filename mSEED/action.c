@@ -14,10 +14,10 @@
 
 int TestStruct(){
 	printf("Test struct size only.\n");
-	HEAD head;
+	MHEAD head;
 	FRAME frame;
 	PACK pack;
-	printf("SIZE of head = %ld\n",sizeof(HEAD));
+	printf("SIZE of head = %ld\n",sizeof(MHEAD));
 	printf("SIZE of frame = %ld\n",sizeof(FRAME));
 	printf("SIZE of pack = %ld\n",sizeof(PACK));
 

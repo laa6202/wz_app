@@ -39,7 +39,7 @@ typedef struct{
 	S32		time_cor;
 	U16		offset_data;
 	U16	 	offset_block0;
-} HEAD,*pHEAD;
+} MHEAD,*pMHEAD;
 
 
 typedef struct {
@@ -69,7 +69,7 @@ typedef struct{
 
 
 typedef struct{
-	HEAD head;
+	MHEAD head;
 	BLOCK0 block0;
 	BLOCK1 block1;
 	FRAME f0;

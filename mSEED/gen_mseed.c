@@ -47,13 +47,13 @@ int EofPack(RAWALL rawAll,int did,int ch){
 
 
 int GenHead(const char * fn,RAWALL rawAll,int did,int ch){
-	HEAD head;
-	memset(&head,0,sizeof(HEAD));
+	MHEAD head;
+	memset(&head,0,sizeof(MHEAD));
 //	int utc = rawAll->.utc;
-	printf("......utc = \n");
+	printf("......HEAD.utc = \n");
 	
 	FILE *fid = fopen(fn,"a");
-	fwrite(&head,1,sizeof(HEAD),fid);
+	fwrite(&head,1,sizeof(MHEAD),fid);
 	fclose(fid);
 	return 0;
 }
@@ -62,25 +62,34 @@ int GenHead(const char * fn,RAWALL rawAll,int did,int ch){
 
 int GenBlock0(const char * fn,RAWALL rawAll,int did,int ch){
 	printf("......Block0 = \n");
-
+	BLOCK0 block0;
+	memset(&block0,0,sizeof(BLOCK0));
+	FILE *fid = fopen(fn,"a");
+	fwrite(&block0,1,sizeof(BLOCK0),fid);
+	fclose(fid);
 
 	return 0;
 }
 
 
-
-
 int GenBlock1(const char * fn,RAWALL rawAll,int did,int ch){
 	printf("......Block1 = \n");
-
+	BLOCK1 block1;
+	memset(&block1,0,sizeof(BLOCK1));
+	FILE *fid = fopen(fn,"a");
+	fwrite(&block1,1,sizeof(BLOCK1),fid);
+	fclose(fid);
 	return 0;
 }
 
 
 int GenFrame0(const char *fn,RAWALL rawAll,int did,int ch){
 	printf("......Frame0 = \n");
-
-
+	FRAME frm0;
+	memset(&frm0,0,sizeof(FRAME));
+	FILE *fid = fopen(fn,"a");
+	fwrite(&frm0,1,sizeof(FRAME),fid);
+	fclose(fid);
 	return 0;
 }
 
@@ -88,7 +97,11 @@ int GenFrame0(const char *fn,RAWALL rawAll,int did,int ch){
 
 int GenFrames(const char *fn,RAWALL rawAll,int did,int ch){
 	printf("......Frames = \n");
-
+	FRAME frms[6];
+	memset(frms,0,6*sizeof(FRAME));
+	FILE * fid = fopen(fn,"a");
+	fwrite(frms,6,sizeof(FRAME),fid);
+	fclose(fid);
 	return 0;
 }
 
