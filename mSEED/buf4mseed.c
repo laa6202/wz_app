@@ -48,8 +48,11 @@ int GenTestWZPKG(pWZPKG pwzpkg,int dev_id){
 	pwzpkg->head[11] = (start_ns & 0xff);
 
 	int x,y,z;
+	int r;
 	for (int i=0;i<2000;i++){
-		x = i * 27;
+		r = rand();
+		//x = r%10;
+		x = i * 7;
 		y = i * 15 + 5;
 		z = i * 12 - 45;
 		pwzpkg->load[i*9] = (x & 0xff0000) >> 16;	

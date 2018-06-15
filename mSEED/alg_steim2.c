@@ -25,16 +25,19 @@ int GetFrame0(pFRAME pfrm0,pRAWALL prawAll,int did,int ch,int pos_sof){
 	int c[16];
 	
 	pos = pos_sof;
-		c[0] = 0;
-		w = GetW1(&c[1],prawAll,did,ch,&pos);
-		pfrm0->W[1] = w;
+	c[0] = 0;
+	w = GetW1(&c[1],prawAll,did,ch,&pos);
+	pfrm0->W[1] = w;
 	for(i=3;i<16;i++){
-		w = GetWs(&c[i],prawAll,did,ch,&pos);
+		w = GetWs(c+i,prawAll,did,ch,&pos);
 		pfrm0->W[i] = w;
 	}
-		w = GetW0(c);
-		pfrm0->W[0] = w; 
+	w = GetW0(c);
+	pfrm0->W[0] = w; 
+	ChangeEndianFrm(pfrm0);
+
 	pos_eof = pos;
+//	printf("pos_eof of Frm0 = %d\n",pos_eof);
 	return pos_eof;
 }
 	
@@ -52,27 +55,29 @@ int GetFrames(pFRAME pfrm0,pRAWALL prawAll,int did,int ch,int pos_sof){
 U32 GetW0(const int * c){
 	U32 w0 = 0;
 	for(int i=0;i<16;i++){
-		if(c[i] == 3)	w0 |= (0x3 << (32-2*i));
-		if(c[i] == 2)	w0 |= (0x2 << (32-2*i));
-		if(c[i] == 1)	w0 |= (0x1 << (32-2*i));
+		if(c[i] == 3)	w0 |= (0x3 << (30-2*i));
+		if(c[i] == 2)	w0 |= (0x2 << (30-2*i));
+		if(c[i] == 1)	w0 |= (0x1 << (30-2*i));
 	}
+	printf("w0 = %08x\n",w0);
 	return w0;
 }
 
 
 U32 GetW1(int *c,pRAWALL prawAll,int did,int ch,int* pos){
 	U32 w1;
+	int pos1 = *pos;
 	int data = 0;
-	int x = prawAll->praw[did]->x[*pos];
-	int y = prawAll->praw[did]->y[*pos];
-	int z = prawAll->praw[did]->z[*pos];
+	int x = prawAll->praw[did]->x[pos1];
+	int y = prawAll->praw[did]->y[pos1];
+	int z = prawAll->praw[did]->z[pos1];
 	if(ch==0) data = 	x;
 	if(ch==1) data = 	y;
 	if(ch==2) data = 	z;
-	*pos = *pos +1;
+	*pos = pos1 +1;
 	w1 = data;
 	*c = 0;
-	printf("GetW1 : pos = %d,data = %d,w1 = %d\n",*pos,data,w1);
+	printf("GetW1 : pos = %d,data = %d,w1 = %d\n",pos1,data,w1);
 	return w1;
 }
 
@@ -89,7 +94,7 @@ U32 GetWs(int *c,pRAWALL prawAll,int did, int ch,int *pos){
 	PreDiffData(diff,prawAll,did,ch,*pos);	
 	int diffR = DiffRange(diff);
 	w = BuildWs(diff,diffR);
-	printf("0x%08x   %d\t",w,diffR);
+	printf("0x%08x\t%d\t%d",w,diffR,pos1);
 	printf("\n");
 	if(diffR == 4) *c = 1;
 	else if(diffR <4) *c = 2;
@@ -97,7 +102,6 @@ U32 GetWs(int *c,pRAWALL prawAll,int did, int ch,int *pos){
 	else *c = 0;
 	pos1 += diffR;
 	*pos = pos1;
-
 	return w;
 }
 
@@ -182,4 +186,18 @@ U32 BuildWs(int * diff,int diffR){
 		default : w = 0;
 	}
 	return w;
+}
+
+
+
+int ChangeEndianFrm(pFRAME pfrm){
+	U32 b0,b1,b2,b3;
+	for(int i=0;i<16;i++){
+		b0 = (pfrm->W[i] & 0xff);
+		b1 = (pfrm->W[i] & 0xff00) >> 8;
+		b2 = (pfrm->W[i] & 0xff0000) >> 16;
+		b3 = (pfrm->W[i] & 0xff000000) >> 24;
+		pfrm->W[i] = b0 << 24 | b1 << 16 | b2 <<8 | b3;
+	}
+	return 0;
 }

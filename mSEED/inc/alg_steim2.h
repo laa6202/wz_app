@@ -14,6 +14,7 @@ U32 GetWs(int*,pRAWALL,int,int,int *);
 int PreDiffData(int*,pRAWALL,int,int,int);
 int DiffRange(int *);
 U32 BuildWs(int *,int);
+int ChangeEndianFrm(pFRAME);
 
 #endif
 
