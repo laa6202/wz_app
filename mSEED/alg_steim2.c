@@ -89,7 +89,7 @@ U32 GetWs(int *c,pRAWALL prawAll,int did, int ch,int *pos){
 	int diffR = DiffRange(diff);
 	printf("%d\t",diffR);
 	printf("\n");
-	pos1 += 8;
+	pos1 += diffR;
 	*pos = pos1;
 
 	return w;
@@ -108,7 +108,7 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos){
 		if(ch==1) data[i] = prawAll->praw[did]->y[pos1];
 		if(ch==2) data[i] = prawAll->praw[did]->z[pos1];
 		diff[i] = data[i] - data[i-1];
-	//	printf("[%d]:%d:%d  ",pos1,data[i],diff[i]);
+		printf("[%d]:%d:%d  ",pos1,data[i],diff[i]);
 		pos1++;	
 	}
 
@@ -132,4 +132,11 @@ int DiffRange(int *diff){
 	else if(absMaxDiff <= 16383) return 2;	//15bit
 	else return 1;
 
+}
+
+
+U32 BuildWs(int * diff,int diffR){
+	U32 w;
+
+	return w;
 }
