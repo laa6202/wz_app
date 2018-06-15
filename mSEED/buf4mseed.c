@@ -49,7 +49,7 @@ int GenTestWZPKG(pWZPKG pwzpkg,int dev_id){
 
 	int x,y,z;
 	for (int i=0;i<2000;i++){
-		x = i*10;
+		x = i * 27;
 		y = i * 15 + 5;
 		z = i * 12 - 45;
 		pwzpkg->load[i*9] = (x & 0xff0000) >> 16;	
