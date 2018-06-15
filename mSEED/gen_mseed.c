@@ -103,7 +103,6 @@ int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 	else if(ch==1) prawAll->praw[did]->pos_chy = pos;
 	else if(ch==2) prawAll->praw[did]->pos_chz = pos;
 
-	TestAlg();
 
 	FILE *fid = fopen(fn,"a");
 	fwrite(&frm0,1,sizeof(FRAME),fid);
