@@ -114,8 +114,16 @@ int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 
 int GenFrames(const char *fn,pRAWALL prawAll,int did,int ch){
 	printf("......Frames = \n");
+	int pos;
+	int i;
 	FRAME frms[6];
 	memset(frms,0,6*sizeof(FRAME));
+
+
+	for(i=0;i++;i<7){
+		pos = GetFrames(frms+i,prawAll,did,ch,pos);
+	}
+
 	FILE * fid = fopen(fn,"a");
 	fwrite(frms,6,sizeof(FRAME),fid);
 	fclose(fid);

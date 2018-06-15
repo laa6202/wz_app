@@ -111,6 +111,7 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		x = x >> 8;
 		y = y >> 8;
 		z = z >> 8;
+	//saturation data to < 2^29
 		prawAll->praw[did]->x[pos+i] = (S32)x;
 		prawAll->praw[did]->y[pos+i] = (S32)y;
 		prawAll->praw[did]->z[pos+i] = (S32)z;
