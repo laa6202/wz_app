@@ -88,7 +88,7 @@ int GenBlock1(const char * fn,pRAWALL prawAll,int did,int ch){
 
 int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 	printf("......Frame0 = \n");
-	static int pos;
+	int pos;
 
 	FRAME frm0;
 	memset(&frm0,0,sizeof(FRAME));

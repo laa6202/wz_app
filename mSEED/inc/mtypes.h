@@ -1,7 +1,7 @@
 #ifndef __MTYPES_H
 #define __MTYPES_H
 
-#define LEN_PACK 60000
+#define LEN_RAW  60000
 #define NUM_DEV  20
 
 typedef unsigned char U8;
@@ -90,9 +90,9 @@ typedef struct{
 	int pos_chx;
 	int pos_chy;
 	int pos_chz;
-	S32	x[LEN_PACK];
-	S32 y[LEN_PACK];
-	S32 z[LEN_PACK];
+	S32	x[LEN_RAW];
+	S32 y[LEN_RAW];
+	S32 z[LEN_RAW];
 } RAW,*pRAW;
 
 

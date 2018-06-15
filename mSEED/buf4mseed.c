@@ -22,7 +22,7 @@ int InitRawAll(pRAWALL pRawAll){
 	{
 		pRawAll->praw[i] = (pRAW)malloc(sizeof(RAW));	
 		memset(pRawAll->praw[i],0,sizeof(RAW));
-		pRawAll->praw[i]->len = LEN_PACK;
+		pRawAll->praw[i]->len = LEN_RAW;
 	}
 	return 0;
 }
@@ -102,15 +102,18 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 	}
 	for(int i=0;i<2000;i++)
 	{
-		x = (wzpkg.load[9*i]<<16) | (wzpkg.load[9*i+1]<<8);
-		x += wzpkg.load[9*i+2];
-		y = (wzpkg.load[9*i+3]<<16) | (wzpkg.load[9*i+4]<<8);
-		y += wzpkg.load[9*i+5];
-		z = (wzpkg.load[9*i+6]<<16) | (wzpkg.load[9*i+7]<<8);
-		z += wzpkg.load[9*i+8];
-		prawAll->praw[did]->x[pos+i] = x;
-		prawAll->praw[did]->y[pos+i] = y;
-		prawAll->praw[did]->z[pos+i] = z;
+		x = (wzpkg.load[9*i]<<24) | (wzpkg.load[9*i+1]<<16);
+		x += wzpkg.load[9*i+2]<<8;
+		y = (wzpkg.load[9*i+3]<<24) | (wzpkg.load[9*i+4]<<16);
+		y += wzpkg.load[9*i+5]<<8;
+		z = (wzpkg.load[9*i+6]<<24) | (wzpkg.load[9*i+7]<<16);
+		z += wzpkg.load[9*i+8]<<8;
+		x = x >> 8;
+		y = y >> 8;
+		z = z >> 8;
+		prawAll->praw[did]->x[pos+i] = (S32)x;
+		prawAll->praw[did]->y[pos+i] = (S32)y;
+		prawAll->praw[did]->z[pos+i] = (S32)z;
 	}
 	prawAll->praw[did]->pos_buf += 2000;
 	if(prawAll->praw[did]->pos_buf >= 60000)
