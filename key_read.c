@@ -35,7 +35,7 @@ int KeyRead(pKEY pkey)
 	while(1){
 		ret = read(keys_fd,&t,sizeof(t));
 		if((ret <0) || (t.type != 1)){
-			usleep(20000);
+//			usleep(20000);
 //			printf("t.value = %d\n",t.value);
 			continue;
 		}

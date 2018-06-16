@@ -21,21 +21,15 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 	int pkgRdy = 0;
 	static int index = 0;
 
-//		GenCmdPkgRdy(&cmdCheckPkg);	
-//		CspiRead(&cmdCheckPkg,&cSPI);
-//		ShowCMD(cmdCheckPkg);
-//		pkgRdy = CheckPkgRdy(cmdCheckPkg);
 	pkgRdy = KeyRead(pkey);
 	if(pkgRdy){
 		PspiRead(&wzpkg,&pSPI);
 		ShowPKGInfo(index++,wzpkg);
-		//SaveSomeWZPKG(cfg,wzpkg,0);		
-		int ret;
-		ret = CheckWZPKG(&wzpkg);
-		SaveOneWZPKG(cfg,wzpkg);	
-    SendOneWZPKG(cfg,sock,wzpkg);	
-		ShowStat(cfg,wzpkg,ret);
-   // echo_cli(sock); 
+		int ret = 0;
+//		ret = CheckWZPKG(&wzpkg);
+//		SaveOneWZPKG(cfg,wzpkg);	
+ //   SendOneWZPKG(cfg,sock,wzpkg);	
+//		ShowStat(cfg,wzpkg,ret);
 		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
 	}	
@@ -73,24 +67,26 @@ int ShowPKGInfo(int index,WZPKG wzpkg){
 
 int ShowStat(CFG cfg,WZPKG pkg,int check){
 	static int totalPkg = 0;
-	static int numPkgCh2 = 0;
-	static int numPkgCh8 = 0;
-	static int errPkgCh2 = 0;
-	static int errPkgCh8 = 0;
+	static int numPkgCh[10];
+//	static int numPkgCh8 = 0;
+	static int errPkgCh[10];
+//	static int errPkgCh8 = 0;
 	
 	U8 ch = pkg.head[1];
 	totalPkg ++;
-	if(ch == 2) {
-		numPkgCh2 ++;
+	for(int i=0;i<10;i++){
+		if(ch == i){
+		numPkgCh[i] ++;
 		if(check == -1)
-			errPkgCh2 ++;
+			errPkgCh[i] ++;
+		}
 	}
-	else if(ch == 8){
-		numPkgCh8++;
-		if(check == -1)
-			errPkgCh8 ++;
+
+	printf("total=%d  ",totalPkg);
+	for(int i=1;i<9;i++){
+		printf("[%d]=%d,E=%d  ",i,numPkgCh[i],errPkgCh[i]);
 	}
-	printf("total=%d,\tDev2=%d,Dev8=%d,\terrDev2=%d,errDev8=%d\n",totalPkg,numPkgCh2,numPkgCh8,errPkgCh2,errPkgCh8);
+	printf("\n");
 	return 0;
 }
 
