@@ -43,10 +43,25 @@ int GetFrame0(pFRAME pfrm0,pRAWALL prawAll,int did,int ch,int pos_sof){
 	
 
 
-int GetFrames(pFRAME pfrm0,pRAWALL prawAll,int did,int ch,int pos_sof){
+int GetFrames(pFRAME pfrm,pRAWALL prawAll,int did,int ch,int pos_sof){
+	int pos, pos_eof;
+	int i;
+	U32 w;
+	int c[16];
 
+	pos = pos_sof;
+	c[0] = 0;
+	for(i=1;i<16;i++){
+		w = GetWs(c+i,prawAll,did,ch,&pos);
+		pfrm->W[i] = w;
+//		printf("pos = %d  ",pos);
+	}
+	w = GetW0(c);
+	pfrm->W[0] = w; 
+	ChangeEndianFrm(pfrm);
 
-	return 0;
+	pos_eof =  pos;
+	return pos_eof;
 }
 
 
@@ -59,7 +74,7 @@ U32 GetW0(const int * c){
 		if(c[i] == 2)	w0 |= (0x2 << (30-2*i));
 		if(c[i] == 1)	w0 |= (0x1 << (30-2*i));
 	}
-	printf("w0 = %08x\n",w0);
+//	printf("w0 = %08x\n",w0);
 	return w0;
 }
 
@@ -77,7 +92,7 @@ U32 GetW1(int *c,pRAWALL prawAll,int did,int ch,int* pos){
 	*pos = pos1 +1;
 	w1 = data;
 	*c = 0;
-	printf("GetW1 : pos = %d,data = %d,w1 = %d\n",pos1,data,w1);
+//	printf("GetW1 : pos = %d,data = %d,w1 = %d\n",pos1,data,w1);
 	return w1;
 }
 
@@ -90,12 +105,12 @@ U32 GetWs(int *c,pRAWALL prawAll,int did, int ch,int *pos){
 	int x,y,z;
 	int pos1 = *pos;
 
-	printf("GetWs : ");
+//	printf("GetWs : ");
 	PreDiffData(diff,prawAll,did,ch,*pos);	
 	int diffR = DiffRange(diff);
 	w = BuildWs(diff,diffR);
-	printf("0x%08x\t%d\t%d",w,diffR,pos1);
-	printf("\n");
+//	printf("0x%08x\t%d\t%d",w,diffR,pos1);
+//	printf("\n");
 	if(diffR == 4) *c = 1;
 	else if(diffR <4) *c = 2;
 	else if(diffR >4) *c = 3;
@@ -118,7 +133,7 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos){
 		if(ch==1) data[i] = prawAll->praw[did]->y[pos1];
 		if(ch==2) data[i] = prawAll->praw[did]->z[pos1];
 		diff[i] = data[i] - data[i-1];
-	//	printf("[%d]:%d:%d  ",pos1,data[i],diff[i]);
+//		printf("[%d]:%d:%d  ",pos1,data[i],diff[i]);
 		pos1++;	
 	}
 
