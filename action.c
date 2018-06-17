@@ -26,10 +26,10 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 		PspiRead(&wzpkg,&pSPI);
 		ShowPKGInfo(index++,wzpkg);
 		int ret = 0;
-//		ret = CheckWZPKG(&wzpkg);
-//		SaveOneWZPKG(cfg,wzpkg);	
- //   SendOneWZPKG(cfg,sock,wzpkg);	
-//		ShowStat(cfg,wzpkg,ret);
+		ret = CheckWZPKG(&wzpkg);
+		SaveOneWZPKG(cfg,wzpkg);	
+    SendOneWZPKG(cfg,sock,wzpkg);	
+		ShowStat(cfg,wzpkg,ret);
 		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
 	}	

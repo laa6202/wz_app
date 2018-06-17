@@ -10,7 +10,7 @@
 #include <sys/ioctl.h>  
 #include <linux/types.h>  
 #include <linux/spi/spidev.h> 
-
+#include <time.h>
 
 #include "types.h"
 #include "pspi_read.h"
@@ -93,20 +93,18 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
  
 //pkg1
     gettimeofday(&tv,NULL);
-    printf("before write time: \n");
+    printf("before write time:");
     printf("tv_usec: %d \n",tv.tv_usec);
 
     memset(rx,0,4096);
     ret = read(pspi->fd,rx,4096);
    // ret = ioctl(pspi->fd, SPI_IOC_MESSAGE(1), &tr);  
   
-    printf("ret is %d \n",ret);
     if (ret < 1)  {
         printf("can't send spi message");
 			  abort();
 		} 
       
-			printf("head is \n");
 		for(i=0;i<12;i++){
 			printf("--%02x--",rx[i]);
 			pwzpkg->head[i] = rx[i];
@@ -178,7 +176,7 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		pwzpkg->index++;
     
     gettimeofday(&tv,NULL);
-    printf("after write time: \n");
+    printf("\n after write time: ");
     printf("tv_usec: %d \n",tv.tv_usec);
 	return 0;
 }// 实现
