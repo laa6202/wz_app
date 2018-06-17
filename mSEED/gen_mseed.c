@@ -98,7 +98,6 @@ int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 	else if(ch==2) pos = prawAll->praw[did]->pos_chz;
 
 	pos = GetFrame0(&frm0,prawAll,did,ch,pos);
-	printf("GenFrm0: ch = %d\tpos = %d\n",ch,pos);
 
 	if(ch==0) prawAll->praw[did]->pos_chx = pos;
 	else if(ch==1) prawAll->praw[did]->pos_chy = pos;
@@ -121,18 +120,9 @@ int GenFrames(const char *fn,pRAWALL prawAll,int did,int ch){
 	memset(frms,0,6*sizeof(FRAME));
 
 
-	if(ch==0) pos = prawAll->praw[did]->pos_chx;
-	else if(ch==1) pos = prawAll->praw[did]->pos_chy;
-	else if(ch==2) pos = prawAll->praw[did]->pos_chz;
-
-	for(i=0;i<6;i++){
+	for(i=0;i++;i<7){
 		pos = GetFrames(frms+i,prawAll,did,ch,pos);
-		printf("GenFrms: i = %d,pos = %d\n",i,pos);
 	}
-
-	if(ch==0) prawAll->praw[did]->pos_chx = pos;
-	else if(ch==1) prawAll->praw[did]->pos_chy = pos;
-	else if(ch==2) prawAll->praw[did]->pos_chz = pos;
 
 	FILE * fid = fopen(fn,"a");
 	fwrite(frms,6,sizeof(FRAME),fid);
