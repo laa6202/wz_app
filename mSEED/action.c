@@ -41,8 +41,8 @@ int Action(int did,pRAWALL prawAll,CFGALL cfgAll){
 
 	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
 	GenMSeed(did,0,prawAll,fnMSeedX);
-//	GenMSeed(did,1,prawAll,fnMSeedY);
-//	GenMSeed(did,2,prawAll,fnMSeedZ);
+	GenMSeed(did,1,prawAll,fnMSeedY);
+	GenMSeed(did,2,prawAll,fnMSeedZ);
 	return 0;
 }
 

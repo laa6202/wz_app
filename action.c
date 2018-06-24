@@ -58,8 +58,10 @@ int ShowPKGInfo(int index,WZPKG wzpkg){
 	ns[1] = wzpkg.head[10];
 	ns[2] = wzpkg.head[9];
 	ns[3] = wzpkg.head[8];
+	long ns_int = ns[3] << 24 | ns[2] << 16 | ns[1] << 8 | ns[0]; 
 	printf("index=%d \tDevid=%02x\tutc=0x%02x%02x%02x%02x\t",index,devid,utc[3],utc[2],utc[1],utc[0]);
-	printf("ns=0x%02x%02x%02x%02x\n",ns[3],ns[2],ns[1],ns[0]);
+//	printf("ns=0x%02x%02x%02x%02x\n",ns[3],ns[2],ns[1],ns[0]);
+	printf("ns = %ld\n",ns_int);
 
 	return 0;
 }

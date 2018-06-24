@@ -32,9 +32,9 @@ int FnBase(char * fn,int did,const char * fnCfg){
 
 int FnChannel(char *fn,int ch){
 	if(ch==0)
-		strcat(fn,"_SHE_0");
+		strcat(fn,"_SHN_0");
 	else if(ch==1)
-		strcat(fn,"_SHN_1");
+		strcat(fn,"_SHE_1");
 	else if(ch==2)
 		strcat(fn,"_SHZ_2");
 	else
@@ -47,8 +47,8 @@ int CIndex(char *cIndex,int did){
 	static int index[20];
 	sprintf(cIndex,"_%07d",index[did-1]);
 	index[did-1] ++;
-	if(index[did-1] >= 1000000)
-		index[did-1] = 0;
+	if(index[did-1] > 1000000)
+		index[did-1] = 1;
 	return 0;
 }
 

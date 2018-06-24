@@ -3,8 +3,8 @@
 
 #include "mtypes.h"
 
-#define START_UTC 12345
-#define START_NS  67890
+#define START_UTC 3600
+#define START_NS  800000000
 
 int InitWZPKG(pWZPKG);
 int InitRawAll(pRAWALL);

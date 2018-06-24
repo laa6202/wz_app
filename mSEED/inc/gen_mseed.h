@@ -15,6 +15,9 @@ int GenBlock1(const char *fn,pRAWALL,int,int);
 int GenFrame0(const char *fn,pRAWALL,int,int);
 int GenFrames(const char *fn,pRAWALL,int,int);
 
+int UpdateHead(const char *fn,pRAWALL,int,int,int);
+int UpdateFrm0(const char *fn,pRAWALL,int,int,int);
+
 
 #endif
 

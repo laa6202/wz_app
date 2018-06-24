@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "types.h"
 
@@ -49,10 +50,14 @@ int GenTestWZPKG(pWZPKG pwzpkg,int dev_id){
 
 	int x,y,z;
 	int r;
+	time_t now;
+ 	time(&now);
+//	srand(now);
+	srand(4);		//fix data
 	for (int i=0;i<2000;i++){
 		r = rand();
-		//x = r%10;
-		x = i * 7;
+		x = r%24;
+	//	x = i * 10;
 		y = i * 15 + 5;
 		z = i * 12 - 45;
 		pwzpkg->load[i*9] = (x & 0xff0000) >> 16;	
