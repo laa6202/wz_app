@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "mtypes.h"
 #include "gen_mseed.h"
@@ -53,8 +54,12 @@ int EofPack(pRAWALL prawAll,int did,int ch){
 	else if(ch==1) pos_sof = prawAll->praw[did]->pos_chy;
 	else if(ch==2) pos_sof = prawAll->praw[did]->pos_chz;
 
-	if(pos_sof >= len)
+	if(pos_sof >= len) {
+		if(ch==0) prawAll->praw[did]->pos_chx = 0;
+		else if(ch==1) prawAll->praw[did]->pos_chy = 0;
+		else if(ch==2) prawAll->praw[did]->pos_chz = 0;
 		return 1;
+	}
 	else 
 		return 0;
 }
@@ -92,6 +97,10 @@ int GenHead(const char * fn,pRAWALL prawAll,int did,int ch){
 	ChangeEndianU16(&head.offset_block0);
 
 	FILE *fid = fopen(fn,"ab");
+	if(fid == NULL) {
+		printf("!!!Can not open %s\n",fn);
+		_exit(-1);
+	}
 	fwrite(&head,1,sizeof(MHEAD),fid);
 	fclose(fid);
 	return 0;
@@ -238,6 +247,7 @@ int UpdateFrm0(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
 	FILE * fid = fopen(fn,"rb+");
 	fseek(fid,-440L,SEEK_END);
 	fwrite(&dataEof,1,sizeof(U32),fid);	
+	fclose(fid);
 //	printf("UpdateHead : sof=%d,eof=%d,num=%d,",sof,eof,numPoint);
 //	printf("data=%d,write=0x%08x\n",data,dataEof);
 	return 0;

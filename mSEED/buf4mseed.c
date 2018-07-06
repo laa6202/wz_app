@@ -116,6 +116,9 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		y += wzpkg.load[9*i+5]<<8;
 		z = (wzpkg.load[9*i+6]<<24) | (wzpkg.load[9*i+7]<<16);
 		z += wzpkg.load[9*i+8]<<8;
+		x = x - 0x80000000;
+		y = y - 0x80000000;
+		z = z - 0x80000000;
 		x = x >> 8;
 		y = y >> 8;
 		z = z >> 8;
@@ -130,7 +133,7 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		prawAll->praw[did]->pos_buf %= 60000;
 		finish = did;
 	}
-//	printf("pos = %d\n",prawAll->praw[did]->pos);
+//	printf("pos = %d\n",prawAll->praw[did]->pos_buf);
 
 	return finish;
 }

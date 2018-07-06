@@ -128,7 +128,12 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos,int flagD){
 	int data[8];
 	int pos1 = pos;
 	int len = prawAll->praw[did]->len;
-	if(pos1 == 0)	data[0] = 0;
+
+	if(pos1 > len){
+		memset(diff,0,8*sizeof(int));
+		return 1;
+	}
+	else if(pos1 == 0)	data[0] = 0;
 	else if(flagD == 1) data[0] =0;
 	else {
 		if(ch==0) data[0] = prawAll->praw[did]->x[pos1-1];
@@ -142,7 +147,7 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos,int flagD){
 		if(ch==2) data[i] = prawAll->praw[did]->z[pos1];
 		diff[i] = data[i] - data[i-1];
 //		printf("d[%d]:%d:%d  ",pos1,data[i],diff[i]);
-		if(pos1 <= len) pos1++;	
+		if(pos1 < len) pos1++;	
 	}
 
 	return pos1;
