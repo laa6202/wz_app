@@ -15,7 +15,7 @@
 
 
 int GenMSeed(int did,int ch,pRAWALL prawAll,const char * fn){
-	printf("...GenMSeed did = %d\tch = %d\tfn= %s\n",did,ch,fn);
+	printf("\033[32m...GenMSeed did = %d\tch = %d\tfn= %s\033[0m\n",did,ch,fn);
 	int end = 0;
 	
 	FILE * fid = fopen(fn,"wb");
@@ -34,7 +34,7 @@ int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
 	if(ch==0) pos_sof = prawAll->praw[did]->pos_chx;
 	else if(ch==1) pos_sof = prawAll->praw[did]->pos_chy;
 	else if(ch==2) pos_sof = prawAll->praw[did]->pos_chz;
-	printf("\n...GenPack did = %d\tch = %d\tpos_sof = %d\n",did,ch,pos_sof);
+//	printf("\n...GenPack did = %d\tch = %d\tpos_sof = %d\n",did,ch,pos_sof);
 
 	GenHead(fn,prawAll,did,ch);
 	GenBlock0(fn,prawAll,did,ch);
@@ -71,7 +71,7 @@ int GenHead(const char * fn,pRAWALL prawAll,int did,int ch){
 //	int utc = rawAll->.utc;
 	
 	GetSeq(head.seq,prawAll,did,ch);
-	printf("......HEAD.seq = %s......\n",head.seq);
+//	printf("......HEAD.seq = %s......\n",head.seq);
 	head.quality = 'D';
 	head.res = 0x20;
 	strcpy(head.station, "SLT  ");

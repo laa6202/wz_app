@@ -81,7 +81,7 @@ int CovU2BTIME(pBTIME pbtime,U32 utc,U32 uns,int pos,S16 rate){
 
 	char * cStart;
 	cStart = ctime(&tStart);
-	printf("pos=%d,usStart_mod=%ld,cStart=%s",pos,usStart_mod,cStart);
+//	printf("ConvU2Btime:pos=%d,usStart_mod=%ld,cStart=%s",pos,usStart_mod,cStart);
 //	printf("utc_mod=%d,us100=%d\n",utc_mod,pbtime->us100);
 
 //	pbtime->hour = 12;
