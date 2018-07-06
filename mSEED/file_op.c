@@ -11,9 +11,26 @@ int FnBase(char * fn,int did,const char * fnCfg){
 	char fnBase[150];
 	strcpy(fnBase,"DAT/XX_SLT");
 	switch(did){
+		case 1: strcat(fnBase,"_D01"); break;
 		case 2: strcat(fnBase,"_D02"); break;
 		case 3:	strcat(fnBase,"_D03"); break;
 		case 4: strcat(fnBase,"_D04"); break;
+		case 5: strcat(fnBase,"_D05"); break;
+		case 6: strcat(fnBase,"_D06"); break;
+		case 7:	strcat(fnBase,"_D07"); break;
+		case 8: strcat(fnBase,"_D08"); break;
+		case 9:	strcat(fnBase,"_D09"); break;
+		case 10: strcat(fnBase,"_D10"); break;
+		case 11: strcat(fnBase,"_D11"); break;
+		case 12: strcat(fnBase,"_D12"); break;
+		case 13: strcat(fnBase,"_D13"); break;
+		case 14: strcat(fnBase,"_D14"); break;
+		case 15: strcat(fnBase,"_D15"); break;
+		case 16: strcat(fnBase,"_D16"); break;
+		case 17: strcat(fnBase,"_D17"); break;
+		case 18: strcat(fnBase,"_D18"); break;
+		case 19: strcat(fnBase,"_D19"); break;
+		case 20: strcat(fnBase,"_D20"); break;
 		default : strcat(fnBase,"_DXX"); break;
 	}
 

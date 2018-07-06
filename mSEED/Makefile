@@ -5,14 +5,14 @@ LIB=
 INCDIR=inc -I ../inc
 OUTDIR=out
 TAR=mSEED
-SRC=main.c action.c \
+SRC=main.c action_mseed.c \
 		buf4mseed.c	btime.c file_op.c \
 		gen_mseed.c gen_par.c \
 		alg_steim2.c alg_head.c
 #		cspi_rw.c pspi_read.c key_read.c\
 #		wzpkg.c \
 #		dir_save.c send_to_net.c
-OBJ=main.o action.o  \
+OBJ=main.o action_mseed.o  \
 		buf4mseed.o	btime.o file_op.o \
 		gen_mseed.o	gen_par.o \
 		alg_steim2.o alg_head.o

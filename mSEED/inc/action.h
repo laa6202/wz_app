@@ -1,5 +1,5 @@
-#ifndef __ACTION_MSEED_H
-#define __ACTION_MSEED_H
+#ifndef __ACTION_M_H
+#define __ACTION_M_H
 
 int TestStruct(void);
 

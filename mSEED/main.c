@@ -6,7 +6,7 @@
 #include "types.h"
 
 #include "mtypes.h"
-#include "action.h"
+#include "action_mseed.h"
 #include "buf4mseed.h"
 #include "btime.h"
 #include "file_op.h"
@@ -32,13 +32,14 @@ int main(int argc, char **argv){
 	for(;i<100;i++)
 	{
 
-		GenTestWZPKG(&wzpkg,i%3+2);
+		GenTestWZPKG(&wzpkg,i%3+1);
 //		ShowWZPKGInfo(&wzpkg);
 		int did = BufWZPKG2Raw(&rawAll,wzpkg);	
 
 		switch(did)
 		{
-			case 2 : Action(did,&rawAll,cfgAll); break;
+			case 1 : ActionMSeed(did,&rawAll,cfgAll); break;
+			case 2 : ActionMSeed(did,&rawAll,cfgAll); break;
 //			case 3 : Action(did,&rawAll,cfgAll); break;
 //			case 4 : Action(did,&rawAll,cfgAll); break;
 			default : ;
