@@ -11,7 +11,7 @@
 #include "mtypes.h"
 #include "buf4mseed.h"
 
-int InitWZPKG(pWZPKG pwzpkg){
+int InitWZPKG2(pWZPKG pwzpkg){
 	memset(pwzpkg,0,sizeof(WZPKG));
 	return 0;
 }

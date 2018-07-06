@@ -19,12 +19,12 @@ int main(int argc, char **argv){
 	WZPKG wzpkg;
 	RAWALL rawAll;
 	CFGALL cfgAll;
-	char fnMSeedX[200];
-	char fnMSeedY[200];
-	char fnMSeedZ[200];
+//	char fnMSeedX[200];
+//	char fnMSeedY[200];
+//	char fnMSeedZ[200];
 
 
-	InitWZPKG(&wzpkg);
+	InitWZPKG2(&wzpkg);
 	InitRawAll(&rawAll);
 	InitCfgAll(&cfgAll);
 

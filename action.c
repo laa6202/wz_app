@@ -12,8 +12,11 @@
 #include "wzpkg.h"
 #include "send_to_net.h"
 
+#include "mtypes.h"
+#include "buf4mseed.h"
+#include "action_mseed.h"
 
-int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
+int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL pcfgAll){
 	printf("--- action main ---\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
@@ -32,7 +35,25 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock){
 		ShowStat(cfg,wzpkg,ret);
 		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
-	}	
+		
+		int did = BufWZPKG2Raw(prawAll,wzpkg);
+		switch(did)
+		{
+			case 1 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 2 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 3 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 4 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 5 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 6 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 7 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 8 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 9 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 10 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			default :;
+		}
+	}
+
+	
 	
 	return 0;
 }

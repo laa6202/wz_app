@@ -6,7 +6,7 @@
 #define START_UTC 3600
 #define START_NS  800000000
 
-int InitWZPKG(pWZPKG);
+int InitWZPKG2(pWZPKG);
 int InitRawAll(pRAWALL);
 
 int GenTestWZPKG(pWZPKG,int);
