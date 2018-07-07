@@ -16,6 +16,7 @@
 #include "mtypes.h"
 #include "buf4mseed.h"
 #include "action_mseed.h"
+#include "alg_steim2.h"
 
 
 	static int glb_did;
@@ -78,7 +79,7 @@ int MainMSeed(int did,pRAWALL prawAll,CFGALL cfgAll){
 	pthread_t pid1;
 
 	PrepareData(did,prawAll,cfgAll);
-//	ThreadMSeed();
+//	(void *)ThreadMSeed(NULL);
 	int err = pthread_create(&pid1,NULL,ThreadMSeed,NULL);
 //	int err = pthread_create(&pid1,NULL,ThreadTest,NULL);
 	return 0;
@@ -89,8 +90,11 @@ int PrepareData(int did,pRAWALL prawAll,CFGALL cfgAll){
 	glb_did = did;
 	glb_prawAll = prawAll;
 	glb_cfgAll = cfgAll;
+	InterP(glb_did,glb_prawAll);
+//	ShowRawP(glb_did,glb_prawAll);
 	return 0;
 }
+
 
 void *ThreadMSeed(void * arg){
 	ActionMSeed(glb_did,glb_prawAll,glb_cfgAll);

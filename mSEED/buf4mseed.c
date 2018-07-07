@@ -116,18 +116,25 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		y += wzpkg.load[9*i+5]<<8;
 		z = (wzpkg.load[9*i+6]<<24) | (wzpkg.load[9*i+7]<<16);
 		z += wzpkg.load[9*i+8]<<8;
-		x = x - 0x80000000;
-		y = y - 0x80000000;
-		z = z - 0x80000000;
-		x = x >> 8;
-		y = y >> 8;
-		z = z >> 8;
+
+		int x1 = x - 0x80000000;
+		int y1 = y - 0x80000000;
+		int z1 = z - 0x80000000;
+		int x2 = x1 >> 8;
+		int y2 = y1 >> 8;
+		int z2 = z1 >> 8;
+
+//		if((i>1993) || (i<6)){
+//			printf("i=%d,x=0x%06x,=%d\n",i,x,x2);
+//		}
 	//saturation data to < 2^29
-		prawAll->praw[did]->x[pos+i] = (S32)x;
-		prawAll->praw[did]->y[pos+i] = (S32)y;
-		prawAll->praw[did]->z[pos+i] = (S32)z;
+		prawAll->praw[did]->x[pos+i] = (S32)x2;
+		prawAll->praw[did]->y[pos+i] = (S32)y2;
+		prawAll->praw[did]->z[pos+i] = (S32)z2;
 	}
 	prawAll->praw[did]->pos_buf += 2000;
+
+
 	if(prawAll->praw[did]->pos_buf >= 60000)
 	{
 		prawAll->praw[did]->pos_buf %= 60000;

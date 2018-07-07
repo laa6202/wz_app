@@ -17,6 +17,43 @@ int TestAlg(){
 }
 
 
+int ShowRawP(int did,pRAWALL prawAll){
+	for(int i=0;i<29;i++){
+		int base = i*2000 + 2000;
+		int xm3 = prawAll->praw[did]->x[base-3];
+		int xm2 = prawAll->praw[did]->x[base-2];
+		int xm1 = prawAll->praw[did]->x[base-1];
+		int x0 = prawAll->praw[did]->x[base];
+		int x1 = prawAll->praw[did]->x[base+1];
+		printf("ShowRawP:[%d]=%d,[%d]=%d,[%d]=%d,[%d]=%d,[%d]=%d\n",base-3,xm3,base-2,xm2,base-1,xm1,base,x0,base+1,x1);
+	}
+	return 0;
+}
+
+
+int InterP(int did,pRAWALL prawAll){
+	for(int i=0;i<30;i++)
+	{
+		int x_befor = prawAll->praw[did]->x[i*2000+1998];
+		int y_befor = prawAll->praw[did]->y[i*2000+1998];
+		int z_befor = prawAll->praw[did]->z[i*2000+1998];
+		int x_after = (i==29) ? prawAll->praw[did]->x[i*2000+1998] : \
+														prawAll->praw[did]->x[i*2000+2000] ;
+		int y_after = (i==29) ? prawAll->praw[did]->y[i*2000+1998] : \
+														prawAll->praw[did]->y[i*2000+2000] ;
+		int z_after = (i==29) ? prawAll->praw[did]->z[i*2000+1998] : \
+														prawAll->praw[did]->z[i*2000+2000] ;
+		int x_inter = (x_befor + x_after) /2 ;
+		int y_inter = (y_befor + y_after) /2 ;
+		int z_inter = (z_befor + z_after) /2 ;
+		prawAll->praw[did]->x[i*2000+1999] = x_inter;
+		prawAll->praw[did]->y[i*2000+1999] = y_inter;
+		prawAll->praw[did]->z[i*2000+1999] = z_inter;
+//		printf("InterP:i=%d,befor=%d,inter=%d,after=%d\n",i,x_befor,x_inter,x_after);
+	}
+	return 0;
+}
+
 
 int GetFrame0(pFRAME pfrm0,pRAWALL prawAll,int did,int ch,int pos_sof){
 	int pos_eof,pos;
@@ -140,6 +177,7 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos,int flagD){
 		if(ch==1) data[0] = prawAll->praw[did]->y[pos1-1];
 		if(ch==2) data[0] = prawAll->praw[did]->z[pos1-1];
 	}
+
 	diff[0] = 0;
 	for(int i=1;i<8;i++){
 		if(ch==0) data[i] = prawAll->praw[did]->x[pos1];
@@ -148,8 +186,21 @@ int PreDiffData(int *diff,pRAWALL prawAll,int did,int ch,int pos,int flagD){
 		diff[i] = data[i] - data[i-1];
 //		printf("d[%d]:%d:%d  ",pos1,data[i],diff[i]);
 		if(pos1 < len) pos1++;	
+
+//		if((diff[i] >= 200000) & (flagD == 0))  {
+//			printf("\033[31m Err!");
+//			printf("i=%d,pos1=%d,d-=%d,d=%d",i,pos1-1,data[i-1],data[i]);
+//			printf("\033[0m  \n");
+//		}	
 	}
 
+
+//	for(int i=1;i<8;i++){
+//		if(diff[i] >= 200000){
+//			printf("i=%d,base=%d,diff=%d,d-=%d,d=%d",i,pos,diff[i],data[i-1],data[i]);	
+//		}
+//	}
+	
 	return pos1;
 }
 

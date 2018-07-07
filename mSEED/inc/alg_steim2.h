@@ -4,6 +4,9 @@
 #include "mtypes.h"
 
 int TestAlg(void);
+int InterP(int,pRAWALL);
+int ShowRawP(int,pRAWALL);
+
 int GetFrame0(pFRAME,pRAWALL,int,int,int);
 int GetFrames(pFRAME,pRAWALL,int,int,int);
 
