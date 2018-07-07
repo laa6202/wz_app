@@ -5,6 +5,11 @@
 #include "mtypes.h"
 
 int action(CFG cfg,SPI,SPI,pKEY,int sock,pRAWALL,pCFGALL);
+int MainMSeed(int,pRAWALL,CFGALL);
+int PrepareData(int,pRAWALL,CFGALL);
+void *ThreadMSeed( void *arg);
+
+
 int ShowCMD(CMD);
 int ShowPKGInfo(int,WZPKG);
 int ShowStat(CFG,WZPKG,int);

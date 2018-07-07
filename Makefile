@@ -1,7 +1,7 @@
 CC=arm-linux-gcc
 #CC=gcc 
 FLAG= -std=c99
-LIB=
+LIB= -lpthread
 INCDIR=inc -I mSEED/inc
 OUTDIR=out
 TAR=wz_app
@@ -25,7 +25,7 @@ OBJ=main.o init.o action.o \
 		gen_mseed.o gen_par.o
 
 $(TAR) : $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ $(LIB)
 
 $(OBJ) : $(SRC)
 	$(CC) $(FLAG) -c $^ -I $(INCDIR)

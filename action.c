@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "action.h"
 #include "types.h"
@@ -15,6 +16,12 @@
 #include "mtypes.h"
 #include "buf4mseed.h"
 #include "action_mseed.h"
+
+
+int glb_did;
+pRAWALL glb_prawAll;
+CFGALL glb_cfgAll;
+
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL pcfgAll){
 	printf("--- action main ---\n");
@@ -39,24 +46,36 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 		int did = BufWZPKG2Raw(prawAll,wzpkg);
 		switch(did)
 		{
-			case 1 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 2 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 3 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 4 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 5 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 6 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 7 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 8 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 9 : ActionMSeed(did,prawAll,*pcfgAll); break;
-			case 10 : ActionMSeed(did,prawAll,*pcfgAll); break;
+			case 1 : MainMSeed(did,prawAll,*pcfgAll); break;
 			default :;
 		}
 	}
 
-	
-	
 	return 0;
 }
+
+
+int MainMSeed(int did,pRAWALL prawAll,CFGALL cfgAll){
+	pthread_t pid1;
+
+	PrepareData(did,prawAll,cfgAll);
+//	ThreadMSeed();
+	int err = pthread_create(&pid1,NULL,ThreadMSeed,NULL);
+	return 0;
+}
+
+
+int PrepareData(int did,pRAWALL prawAll,CFGALL cfgAll){
+	glb_did = did;
+	glb_prawAll = prawAll;
+	glb_cfgAll = cfgAll;
+	return 0;
+}
+
+void *ThreadMSeed(void * arg){
+	ActionMSeed(glb_did,glb_prawAll,glb_cfgAll);
+}
+
 
 
 int ShowCMD(CMD cmd){
