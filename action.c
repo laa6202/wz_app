@@ -18,9 +18,9 @@
 #include "action_mseed.h"
 
 
-int glb_did;
-pRAWALL glb_prawAll;
-CFGALL glb_cfgAll;
+	static int glb_did;
+	static pRAWALL glb_prawAll;
+	static CFGALL glb_cfgAll;
 
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL pcfgAll){
@@ -47,6 +47,25 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 		switch(did)
 		{
 			case 1 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 2 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 3 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 4 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 5 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 6 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 7 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 8 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 9 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 10 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 11 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 12 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 13 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 14 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 15 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 16 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 17 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 18 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 19 : MainMSeed(did,prawAll,*pcfgAll); break;
+			case 20 : MainMSeed(did,prawAll,*pcfgAll); break;
 			default :;
 		}
 	}
@@ -61,6 +80,7 @@ int MainMSeed(int did,pRAWALL prawAll,CFGALL cfgAll){
 	PrepareData(did,prawAll,cfgAll);
 //	ThreadMSeed();
 	int err = pthread_create(&pid1,NULL,ThreadMSeed,NULL);
+//	int err = pthread_create(&pid1,NULL,ThreadTest,NULL);
 	return 0;
 }
 
@@ -74,6 +94,12 @@ int PrepareData(int did,pRAWALL prawAll,CFGALL cfgAll){
 
 void *ThreadMSeed(void * arg){
 	ActionMSeed(glb_did,glb_prawAll,glb_cfgAll);
+	pthread_detach(pthread_self());
+}
+
+
+void *ThreadTest(void * arg){
+	pthread_detach(pthread_self());
 }
 
 
