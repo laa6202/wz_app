@@ -9,11 +9,16 @@ int GenPack(const char *,pRAWALL,int,int);
 int EofPack(pRAWALL,int,int);
 
 
-int GenHead(const char *fn,pRAWALL,int,int);
-int GenBlock0(const char *fn,pRAWALL,int,int);
-int GenBlock1(const char *fn,pRAWALL,int,int);
-int GenFrame0(const char *fn,pRAWALL,int,int);
-int GenFrames(const char *fn,pRAWALL,int,int);
+//int GenHead(const char *fn,pRAWALL,int,int);
+//int GenBlock0(const char *fn,pRAWALL,int,int);
+//int GenBlock1(const char *fn,pRAWALL,int,int);
+//int GenFrame0(const char *fn,pRAWALL,int,int);
+//int GenFrames(const char *fn,pRAWALL,int,int);
+int GenHead(FILE *,pRAWALL,int,int);
+int GenBlock0(FILE *,pRAWALL,int,int);
+int GenBlock1(FILE *,pRAWALL,int,int);
+int GenFrame0(FILE *,pRAWALL,int,int);
+int GenFrames(FILE *,pRAWALL,int,int);
 
 int UpdateHead(const char *fn,pRAWALL,int,int,int);
 int UpdateFrm0(const char *fn,pRAWALL,int,int,int);

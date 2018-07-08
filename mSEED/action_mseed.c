@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#include <sys/time.h>
 
 #include "mtypes.h"
 #include "action_mseed.h"
@@ -39,10 +39,17 @@ int ActionMSeed(int did,pRAWALL prawAll,CFGALL cfgAll){
 	char fnMSeedY[200];	memset(fnMSeedY,0,200);	
 	char fnMSeedZ[200];	memset(fnMSeedZ,0,200);
 
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	printf("ActionMSeed did=%d: begin GenMSeed %d.%d\n",did,tv.tv_sec,tv.tv_usec);
+
 	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
 	GenMSeed(did,0,prawAll,fnMSeedX);
 	GenMSeed(did,1,prawAll,fnMSeedY);
 	GenMSeed(did,2,prawAll,fnMSeedZ);
+	gettimeofday(&tv,NULL);
+	printf("ActionMSeed did=%d: GenMSeed 2 %d.%d\n",did,tv.tv_sec,tv.tv_usec);
+
 	return 0;
 }
 

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 #include "mtypes.h"
 #include "gen_mseed.h"
@@ -36,13 +37,26 @@ int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
 	else if(ch==2) pos_sof = prawAll->praw[did]->pos_chz;
 //	printf("\n...GenPack did = %d\tch = %d\tpos_sof = %d\n",did,ch,pos_sof);
 
-	GenHead(fn,prawAll,did,ch);
-	GenBlock0(fn,prawAll,did,ch);
-	GenBlock1(fn,prawAll,did,ch);
-	GenFrame0(fn,prawAll,did,ch);
-	GenFrames(fn,prawAll,did,ch);
+//	struct timeval tv;
+//	gettimeofday(&tv,NULL);
+//	printf("GenPack ch=%d: befor : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
+
+	FILE * fid = fopen(fn,"ab");
+	GenHead(fid,prawAll,did,ch);
+	GenBlock0(fid,prawAll,did,ch);
+	GenBlock1(fid,prawAll,did,ch);
+	GenFrame0(fid,prawAll,did,ch);
+	GenFrames(fid,prawAll,did,ch);
+	fclose(fid);
+
+//	gettimeofday(&tv,NULL);
+//	printf("GenPack ch=%d: after Gen : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
+
 	UpdateHead(fn,prawAll,did,ch,pos_sof);
 	UpdateFrm0(fn,prawAll,did,ch,pos_sof);
+//	gettimeofday(&tv,NULL);
+//	printf("GenPack ch=%d: after update : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
+
 	return 0;
 } 
 
@@ -65,7 +79,8 @@ int EofPack(pRAWALL prawAll,int did,int ch){
 }
 
 
-int GenHead(const char * fn,pRAWALL prawAll,int did,int ch){
+//int GenHead(const char * fn,pRAWALL prawAll,int did,int ch){
+int GenHead(FILE * fid ,pRAWALL prawAll,int did,int ch){
 	MHEAD head;
 	memset(&head,0,sizeof(MHEAD));
 //	int utc = rawAll->.utc;
@@ -96,19 +111,16 @@ int GenHead(const char * fn,pRAWALL prawAll,int did,int ch){
 	ChangeEndianU16(&head.offset_data);
 	ChangeEndianU16(&head.offset_block0);
 
-	FILE *fid = fopen(fn,"ab");
-	if(fid == NULL) {
-		printf("!!!Can not open %s\n",fn);
-		_exit(-1);
-	}
+//	FILE *fid = fopen(fn,"ab");
 	fwrite(&head,1,sizeof(MHEAD),fid);
-	fclose(fid);
+//	fclose(fid);
 	return 0;
 }
 
 
 
-int GenBlock0(const char * fn,pRAWALL prawAll,int did,int ch){
+//int GenBlock0(const char * fn,pRAWALL prawAll,int did,int ch){
+int GenBlock0(FILE * fid,pRAWALL prawAll,int did,int ch){
 //	printf("......GenBlock0...... \n");
 	BLOCK0 block0;
 	memset(&block0,0,sizeof(BLOCK0));
@@ -124,26 +136,28 @@ int GenBlock0(const char * fn,pRAWALL prawAll,int did,int ch){
 	ChangeEndianU16(&(block0.offset));
 	
 
-	FILE *fid = fopen(fn,"ab");
+//	FILE *fid = fopen(fn,"ab");
 	fwrite(&block0,1,sizeof(BLOCK0),fid);
-	fclose(fid);
+//	fclose(fid);
 
 	return 0;
 }
 
 
-int GenBlock1(const char * fn,pRAWALL prawAll,int did,int ch){
+//int GenBlock1(const char * fn,pRAWALL prawAll,int did,int ch){
+int GenBlock1(FILE * fid,pRAWALL prawAll,int did,int ch){
 //	printf("......GenBlock1......\n");
 	BLOCK1 block1;
 	memset(&block1,0,sizeof(BLOCK1));
-	FILE *fid = fopen(fn,"ab");
+//	FILE *fid = fopen(fn,"ab");
 	fwrite(&block1,1,sizeof(BLOCK1),fid);
-	fclose(fid);
+//	fclose(fid);
 	return 0;
 }
 
 
-int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
+//int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
+int GenFrame0(FILE * fid,pRAWALL prawAll,int did,int ch){
 //	printf("......GenFrame0......\n");
 	int pos_sof, pos_eof;
 
@@ -162,15 +176,16 @@ int GenFrame0(const char *fn,pRAWALL prawAll,int did,int ch){
 	else if(ch==2) prawAll->praw[did]->pos_chz = pos_eof;
 
 
-	FILE *fid = fopen(fn,"ab");
+//	FILE *fid = fopen(fn,"ab");
 	fwrite(&frm0,1,sizeof(FRAME),fid);
-	fclose(fid);
+//	fclose(fid);
 	return 0;
 }
 
 
 
-int GenFrames(const char *fn,pRAWALL prawAll,int did,int ch){
+//int GenFrames(const char *fn,pRAWALL prawAll,int did,int ch){
+int GenFrames(FILE * fid,pRAWALL prawAll,int did,int ch){
 //	printf("......GenFrames......\n");
 	int pos_sof,pos_eof;
 	int i;
@@ -192,9 +207,9 @@ int GenFrames(const char *fn,pRAWALL prawAll,int did,int ch){
 	else if(ch==1) prawAll->praw[did]->pos_chy = pos_eof;
 	else if(ch==2) prawAll->praw[did]->pos_chz = pos_eof;
 
-	FILE * fid = fopen(fn,"ab");
+//	FILE * fid = fopen(fn,"ab");
 	fwrite(frms,6,sizeof(FRAME),fid);
-	fclose(fid);
+//	fclose(fid);
 	return 0;
 }
 
