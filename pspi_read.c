@@ -85,16 +85,16 @@ int PspiInit(pSPI pspi){
 
 
 int PspiRead(pWZPKG pwzpkg,pSPI pspi){
-  	struct timeval tv;	
+//  	struct timeval tv;	
 		int ret;
 		int i;
     int extra_num = pwzpkg->lenLoad % 4096;  
     uint8_t rx[4096] ; 
  
 //pkg1
-    gettimeofday(&tv,NULL);
-    printf("before write time:");
-    printf("tv_usec: %d \n",tv.tv_usec);
+//    gettimeofday(&tv,NULL);
+//    printf("before write time:");
+//    printf("tv_usec: %d \n",tv.tv_usec);
 
     memset(rx,0,4096);
     ret = read(pspi->fd,rx,4096);
@@ -175,9 +175,9 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 	
 		pwzpkg->index++;
     
-    gettimeofday(&tv,NULL);
-    printf("\n after write time: ");
-    printf("tv_usec: %d \n",tv.tv_usec);
+ //   gettimeofday(&tv,NULL);
+ //  printf("\n after write time: ");
+ //   printf("tv_usec: %d \n",tv.tv_usec);
 	return 0;
 }// 实现
 

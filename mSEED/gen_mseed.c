@@ -206,7 +206,7 @@ int UpdateHead(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
 	int len = prawAll->praw[did]->len;
 	if(ch==0) eof=prawAll->praw[did]->pos_chx;
 	if(ch==1) eof=prawAll->praw[did]->pos_chy;
-	if(ch==2) eof=prawAll->praw[did]->pos_chx;
+	if(ch==2) eof=prawAll->praw[did]->pos_chz;
 	if(eof >= len)	eof = len;
 	int numPoint = eof - sof;
 	U16 num = numPoint;

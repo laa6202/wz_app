@@ -90,13 +90,13 @@ int PrepareData(int did,pRAWALL prawAll,CFGALL cfgAll){
 	glb_did = did;
 	glb_prawAll = prawAll;
 	glb_cfgAll = cfgAll;
-	InterP(glb_did,glb_prawAll);
 //	ShowRawP(glb_did,glb_prawAll);
 	return 0;
 }
 
 
 void *ThreadMSeed(void * arg){
+	InterP(glb_did,glb_prawAll);
 	ActionMSeed(glb_did,glb_prawAll,glb_cfgAll);
 	pthread_detach(pthread_self());
 }

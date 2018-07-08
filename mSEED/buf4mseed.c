@@ -125,7 +125,7 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 		int z2 = z1 >> 8;
 
 //		if((i>1993) || (i<6)){
-//			printf("i=%d,x=0x%06x,=%d\n",i,x,x2);
+//			printf("i=%d,z=0x%06x,=%d\n",i,z,z2);
 //		}
 	//saturation data to < 2^29
 		prawAll->praw[did]->x[pos+i] = (S32)x2;
