@@ -106,7 +106,7 @@ int PspiRead(pWZPKG pwzpkg,pSPI pspi){
 		} 
       
 		for(i=0;i<12;i++){
-			printf("--%02x--",rx[i]);
+//			printf("--%02x--",rx[i]);
 			pwzpkg->head[i] = rx[i];
 		}
 		for(i=12;i<4096;i++){

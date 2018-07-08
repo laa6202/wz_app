@@ -45,7 +45,7 @@ int CheckWZPKG(pWZPKG src){
 	}
 	free(wzU8);
 	if(sum == crc){
-		printf("......CheckWZPKG OK ......\n");
+//		printf("......CheckWZPKG OK ......\n");
 	;
 	}
 	else {

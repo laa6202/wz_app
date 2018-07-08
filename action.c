@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 #include "action.h"
 #include "types.h"
@@ -25,15 +26,20 @@
 
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL pcfgAll){
-	printf("--- action main ---\n");
+	printf("---------- action main ----------\n");
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
 	static int index = 0;
+//	struct timeval tv;
 
 	pkgRdy = KeyRead(pkey);
 	if(pkgRdy){
+		
+//		gettimeofday(&tv,NULL);
+//		printf("action: befor pspi_read %d.%d\n",tv.tv_sec,tv.tv_usec);
+
 		PspiRead(&wzpkg,&pSPI);
 		ShowPKGInfo(index++,wzpkg);
 		int ret = 0;
@@ -44,6 +50,9 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
 		
+//		gettimeofday(&tv,NULL);
+//		printf("action: befor buf4Raw %d.%d\n",tv.tv_sec,tv.tv_usec);
+
 		int did = BufWZPKG2Raw(prawAll,wzpkg);
 		switch(did)
 		{
@@ -69,6 +78,9 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 			case 20 : MainMSeed(did,prawAll,*pcfgAll); break;
 			default :;
 		}
+
+//		gettimeofday(&tv,NULL);
+//		printf("action: end create thread %d.%d\n",tv.tv_sec,tv.tv_usec);
 	}
 
 	return 0;
@@ -129,9 +141,20 @@ int ShowPKGInfo(int index,WZPKG wzpkg){
 	ns[2] = wzpkg.head[9];
 	ns[3] = wzpkg.head[8];
 	long ns_int = ns[3] << 24 | ns[2] << 16 | ns[1] << 8 | ns[0]; 
+	long utc_int = utc[3] << 24 | utc[2] << 16 | utc[1] << 8 | utc[0];
 	printf("index=%d \tDevid=%02x\tutc=0x%02x%02x%02x%02x\t",index,devid,utc[3],utc[2],utc[1],utc[0]);
 //	printf("ns=0x%02x%02x%02x%02x\n",ns[3],ns[2],ns[1],ns[0]);
 	printf("ns = %ld\n",ns_int);
+
+	static int indexAll[20];
+	static int utcAll[20];
+	indexAll[devid] ++;
+	
+	if((utcAll[devid] != utc_int - 1) & (indexAll[devid] != 1)){
+		printf("ShowPkgInfo : ");
+		printf("\033[31m UTC Not ++ did = %d,last_utc = %x,utc_now = %x \033[0m \n",devid,utcAll[devid],utc_int);
+	}
+	utcAll[devid] = utc_int;
 
 	return 0;
 }

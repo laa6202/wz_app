@@ -51,9 +51,10 @@ int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
 
 //	gettimeofday(&tv,NULL);
 //	printf("GenPack ch=%d: after Gen : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
-
-	UpdateHead(fn,prawAll,did,ch,pos_sof);
-	UpdateFrm0(fn,prawAll,did,ch,pos_sof);
+	fid = fopen(fn,"rb+");
+	UpdateHead(fid,prawAll,did,ch,pos_sof);
+	UpdateFrm0(fid,prawAll,did,ch,pos_sof);
+	fclose(fid);
 //	gettimeofday(&tv,NULL);
 //	printf("GenPack ch=%d: after update : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
 
@@ -215,7 +216,8 @@ int GenFrames(FILE * fid,pRAWALL prawAll,int did,int ch){
 
 
 
-int UpdateHead(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
+//int UpdateHead(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
+int UpdateHead(FILE * fid,pRAWALL prawAll,int did,int ch,int sof){
 //	printf("......UpdateHead......\n");
 	int eof;
 	int len = prawAll->praw[did]->len;
@@ -227,13 +229,13 @@ int UpdateHead(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
 	U16 num = numPoint;
 	ChangeEndianU16(&num);
 	
-	FILE * fid = fopen(fn,"rb+");
+//	FILE * fid = fopen(fn,"rb+");
 	int ret = fseek(fid,-482L,SEEK_END);
 	if(ret != 0)
 		perror("");
 	int fpos = ftell(fid);
 	fwrite(&num,1,sizeof(U16),fid);
-	fclose(fid);
+//	fclose(fid);
 
 //	printf("UpdateHead : sof=%d,eof=%d,num=%d,",sof,eof,numPoint);
 //	printf("fpos=%d,write=%04x\n",fpos,num);
@@ -242,7 +244,8 @@ int UpdateHead(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
 
 
 
-int UpdateFrm0(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
+//int UpdateFrm0(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
+int UpdateFrm0(FILE * fid,pRAWALL prawAll,int did,int ch,int sof){
 //	printf("......UpdateFrm0......\n");
 	int eof;
 	int len = prawAll->praw[did]->len;
@@ -259,10 +262,10 @@ int UpdateFrm0(const char * fn,pRAWALL prawAll,int did,int ch,int sof){
 	int dataEof = data;
 	ChangeEndian32(&dataEof);
 
-	FILE * fid = fopen(fn,"rb+");
+//	FILE * fid = fopen(fn,"rb+");
 	fseek(fid,-440L,SEEK_END);
 	fwrite(&dataEof,1,sizeof(U32),fid);	
-	fclose(fid);
+//	fclose(fid);
 //	printf("UpdateHead : sof=%d,eof=%d,num=%d,",sof,eof,numPoint);
 //	printf("data=%d,write=0x%08x\n",data,dataEof);
 	return 0;

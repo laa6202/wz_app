@@ -20,8 +20,10 @@ int GenBlock1(FILE *,pRAWALL,int,int);
 int GenFrame0(FILE *,pRAWALL,int,int);
 int GenFrames(FILE *,pRAWALL,int,int);
 
-int UpdateHead(const char *fn,pRAWALL,int,int,int);
-int UpdateFrm0(const char *fn,pRAWALL,int,int,int);
+//int UpdateHead(const char *fn,pRAWALL,int,int,int);
+//int UpdateFrm0(const char *fn,pRAWALL,int,int,int);
+int UpdateHead(FILE * fid,pRAWALL,int,int,int);
+int UpdateFrm0(FILE * fid,pRAWALL,int,int,int);
 
 
 #endif
