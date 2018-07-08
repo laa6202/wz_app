@@ -5,6 +5,7 @@
 #include "types.h"
 #include "key_read.h"
 #include "send_to_net.h"
+#include "dir_save.h"
 
 #include "mtypes.h"
 #include "action_mseed.h"
@@ -17,6 +18,7 @@ int sock=0;
 int main(int argc ,char ** argv){
 	
 	printf("wz_app\n");
+	LogBegin();
 	
 	CFG cfg;
 	SPI cSPI,pSPI;

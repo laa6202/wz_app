@@ -48,3 +48,24 @@ int SaveSomeWZPKG(const CFG cfg,WZPKG wzpkg,int mount){
 }
 
 
+int LogBegin(){
+	FILE * fid;
+	fid = fopen("wz_app.log","a");
+	fprintf(fid,"\n------------------------------------\n");
+	fprintf(fid,"------------------------------------\n");
+	fclose(fid);
+	return 0;
+}
+
+
+int LogStr(const char * str){
+	FILE * fid;
+	fid = fopen("wz_app.log","a");
+	int len = strlen(str);
+	fprintf(fid,"%s\n",str);
+	fclose(fid);
+	return 0;
+}
+
+
+

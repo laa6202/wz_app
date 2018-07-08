@@ -93,6 +93,14 @@ int ShowWZPKGInfo(pWZPKG pwzpkg){
 int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 	pWZPKG pwzpkg = &wzpkg;
 	int did = wzpkg.head[1];
+
+	if((did >= 20 ) || (did <=0)){
+		char str[200];	memset(str,0,200*sizeof(char));
+		sprintf(str,"\033[31m BUF2RAW : did=%d error! NO buf \033[0m \n",did);
+		printf("%s",str);
+		LogStr(str);
+		return 0;
+	}
 //	printf("dev_id = %d\t",did);
 	int pos = prawAll->praw[did]->pos_buf;
 	int x,y,z;

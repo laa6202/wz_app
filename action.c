@@ -151,8 +151,11 @@ int ShowPKGInfo(int index,WZPKG wzpkg){
 	indexAll[devid] ++;
 	
 	if((utcAll[devid] != utc_int - 1) & (indexAll[devid] != 1)){
-		printf("ShowPkgInfo : ");
-		printf("\033[31m UTC Not ++ did = %d,last_utc = %x,utc_now = %x \033[0m \n",devid,utcAll[devid],utc_int);
+		char strW[200]; memset(strW,0,200*sizeof(char));
+		strcpy(strW,"ShowPkgInfo : ");
+		sprintf(strW,"\033[31m UTC Not ++ did = %d,last_utc = %x,utc_now = %x \033[0m \n",devid,utcAll[devid],utc_int);
+		printf("%s",strW);
+		LogStr(strW);
 	}
 	utcAll[devid] = utc_int;
 

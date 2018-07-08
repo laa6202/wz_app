@@ -50,7 +50,7 @@ int CheckWZPKG(pWZPKG src){
 	}
 	else {
 		printf("sum = %04x,crc = %04x\n",sum,crc);
-		printf("\033[1;31;40m !!!!!!CheckWZPKG Failed!!!!!! \033[0m\n");
+		printf("\033[1;31;40m !!!!!!CheckWZPKG CRC Failed!!!!!! \033[0m\n");
 	  return -1;
 	}
 	return 0;
