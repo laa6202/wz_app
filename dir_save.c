@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "types.h"
 #include "dir_save.h"
@@ -49,19 +50,28 @@ int SaveSomeWZPKG(const CFG cfg,WZPKG wzpkg,int mount){
 
 
 int LogBegin(){
+	time_t now;
+	time(&now);
+	char * cNow = ctime(&now);
+	
 	FILE * fid;
 	fid = fopen("wz_app.log","a");
 	fprintf(fid,"\n------------------------------------\n");
 	fprintf(fid,"------------------------------------\n");
+	fprintf(fid,"%s\n",cNow);
 	fclose(fid);
 	return 0;
 }
 
 
 int LogStr(const char * str){
+	time_t now;
+	time(&now);
+	char * cNow = ctime(&now);
+
 	FILE * fid;
 	fid = fopen("wz_app.log","a");
-	int len = strlen(str);
+	fprintf(fid,"%s\n",cNow);
 	fprintf(fid,"%s\n",str);
 	fclose(fid);
 	return 0;

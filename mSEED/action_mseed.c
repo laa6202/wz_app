@@ -42,11 +42,14 @@ int ActionMSeed(int did,pRAWALL prawAll,CFGALL cfgAll){
 	struct timeval tv;
 	gettimeofday(&tv,NULL);
 	printf("ActionMSeed did=%d: begin GenMSeed %d.%06d\n",did,tv.tv_sec,tv.tv_usec);
-
-	FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
-	GenMSeed(did,0,prawAll,fnMSeedX);
-	GenMSeed(did,1,prawAll,fnMSeedY);
-	GenMSeed(did,2,prawAll,fnMSeedZ);
+	if(did <= 20) {
+		FnMSeed(fnMSeedX,fnMSeedY,fnMSeedZ,did,NULL);	
+		GenMSeed(did,0,prawAll,fnMSeedX);
+		GenMSeed(did,1,prawAll,fnMSeedY);
+		GenMSeed(did,2,prawAll,fnMSeedZ);
+	}
+	else 
+		printf("Error!\n");
 	gettimeofday(&tv,NULL);
 	printf("ActionMSeed did=%d: GenMSeed 2 %d.%06d\n",did,tv.tv_sec,tv.tv_usec);
 

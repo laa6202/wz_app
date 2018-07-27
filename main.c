@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 #include "init.h"
 #include "action.h"
@@ -18,6 +19,7 @@ int sock=0;
 int main(int argc ,char ** argv){
 	
 	printf("wz_app\n");
+	chdir("/home");
 	LogBegin();
 	
 	CFG cfg;

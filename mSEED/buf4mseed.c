@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "types.h"
+#include "dir_save.h"
 
 #include "mtypes.h"
 #include "buf4mseed.h"

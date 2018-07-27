@@ -128,6 +128,9 @@ int ShowCMD(CMD cmd){
 
 
 int ShowPKGInfo(int index,WZPKG wzpkg){
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+
 	U8 devid = wzpkg.head[1];
 	U8 utc[5],ns[5];
 	memset(utc,0,5*sizeof(U8));
@@ -142,9 +145,10 @@ int ShowPKGInfo(int index,WZPKG wzpkg){
 	ns[3] = wzpkg.head[8];
 	long ns_int = ns[3] << 24 | ns[2] << 16 | ns[1] << 8 | ns[0]; 
 	long utc_int = utc[3] << 24 | utc[2] << 16 | utc[1] << 8 | utc[0];
-	printf("index=%d \tDevid=%02x\tutc=0x%02x%02x%02x%02x\t",index,devid,utc[3],utc[2],utc[1],utc[0]);
+	printf("index=%d,Devid=%02x,utc=0x%02x%02x%02x%02x,",index,devid,utc[3],utc[2],utc[1],utc[0]);
 //	printf("ns=0x%02x%02x%02x%02x\n",ns[3],ns[2],ns[1],ns[0]);
-	printf("ns = %ld\n",ns_int);
+	printf("ns = %ld,",ns_int);
+	printf("t = %d:%06d\n",tv.tv_sec%1000,tv.tv_usec);
 
 	static int indexAll[20];
 	static int utcAll[20];
