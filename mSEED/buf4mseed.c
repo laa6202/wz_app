@@ -5,12 +5,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/time.h>
 
 #include "types.h"
 #include "dir_save.h"
 
 #include "mtypes.h"
 #include "buf4mseed.h"
+
+
+int seek[NUM_DEV];
+
 
 int InitWZPKG2(pWZPKG pwzpkg){
 	memset(pwzpkg,0,sizeof(WZPKG));
@@ -22,6 +27,7 @@ int InitRawAll(pRAWALL pRawAll){
 //	printf("sizeof RAWALL = %ld\n",sizeof(RAWALL));
 	for(int i=0;i<NUM_DEV;i++)
 	{
+		seek[i] = 1;
 		pRawAll->praw[i] = (pRAW)malloc(sizeof(RAW));	
 		memset(pRawAll->praw[i],0,sizeof(RAW));
 		pRawAll->praw[i]->len = LEN_RAW;
@@ -152,6 +158,24 @@ int BufWZPKG2Raw(pRAWALL prawAll,WZPKG wzpkg){
 //	printf("pos = %d\n",prawAll->praw[did]->pos_buf);
 
 	return finish;
+}
+
+
+
+int BufInitSeek(WZPKG wzpkg){
+	int did = wzpkg.head[1];
+	if(seek[did] == 0)
+		return 0;
+
+	struct timeval tm;
+	gettimeofday(&tm,NULL);
+	int tm_tail = tm.tv_sec;
+	tm_tail = tm_tail % 30;
+	tm_tail = tm_tail / 3 + 1;		//only 10 dev
+	if(did == tm_tail)
+		seek[did] = 0;
+	printf("BufInitSeek : seek[%d] = %d\n",did,seek[did]);
+	return seek[did];
 }
 
 

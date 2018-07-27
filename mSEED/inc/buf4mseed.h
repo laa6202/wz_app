@@ -11,6 +11,7 @@ int InitRawAll(pRAWALL);
 
 int GenTestWZPKG(pWZPKG,int);
 int ShowWZPKGInfo(pWZPKG);
+int BufInitSeek(WZPKG);
 int BufWZPKG2Raw(pRAWALL,WZPKG); 
 
 #endif
