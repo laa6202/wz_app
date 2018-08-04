@@ -43,7 +43,6 @@ int CheckWZPKG(pWZPKG src){
 		a = a & 0xff;
 		sum += a;
 	}
-	free(wzU8);
 	if(sum == crc){
 //		printf("......CheckWZPKG OK ......\n");
 	;
@@ -51,8 +50,16 @@ int CheckWZPKG(pWZPKG src){
 	else {
 		printf("sum = %04x,crc = %04x\n",sum,crc);
 		printf("\033[1;31;40m !!!!!!CheckWZPKG CRC Failed!!!!!! \033[0m\n");
+		for(int i=0;i<32;i++)
+			printf("%02x",wzU8[i]);
+		printf("\n");
+		for(int i=0;i<32;i++)
+			printf("%02x",wzU8[lenByte-32+i]);
+		printf("\n");
+
 	  return -1;
 	}
+	free(wzU8);
 	return 0;
 }
 

@@ -55,7 +55,7 @@ int LogBegin(){
 	char * cNow = ctime(&now);
 	
 	FILE * fid;
-	fid = fopen("wz_app.log","a");
+	fid = fopen("error.log","a");
 	fprintf(fid,"\n------------------------------------\n");
 	fprintf(fid,"------------------------------------\n");
 	fprintf(fid,"%s\n",cNow);
@@ -70,7 +70,7 @@ int LogStr(const char * str){
 	char * cNow = ctime(&now);
 
 	FILE * fid;
-	fid = fopen("wz_app.log","a");
+	fid = fopen("error.log","a");
 	fprintf(fid,"%s\n",cNow);
 	fprintf(fid,"%s\n",str);
 	fclose(fid);
