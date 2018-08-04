@@ -26,19 +26,18 @@
 
 
 int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL pcfgAll){
-	printf("---------- action main ----------\n");
+	struct timeval tv;
+	gettimeofday(&tv,NULL);
+	printf("---------- action main %d:%06d----------\n",tv.tv_sec%1000,tv.tv_usec);
+
 	WZPKG wzpkg;
 	InitWZPKG(&wzpkg);
 	CMD cmdCheckPkg;
 	int pkgRdy = 0;
-	static int index = 0;
-//	struct timeval tv;
+	static int index = 1;
 
 	pkgRdy = KeyRead(pkey);
 	if(pkgRdy){
-		
-//		gettimeofday(&tv,NULL);
-//		printf("action: befor pspi_read %d.%d\n",tv.tv_sec,tv.tv_usec);
 
 		PspiRead(&wzpkg,&pSPI);
 		ShowPKGInfo(index++,wzpkg);
@@ -50,10 +49,8 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 		if((cfg.noCheck == 0)&&(ret == -1))
 			_exit(-1);
 		
-//		gettimeofday(&tv,NULL);
-//		printf("action: befor buf4Raw %d.%d\n",tv.tv_sec,tv.tv_usec);
-//		if( BufInitSeek(wzpkg) == 1)
-//			return 0;
+		if( BufInitSeek(wzpkg) == 1)
+			return 0;
 		int did = BufWZPKG2Raw(prawAll,wzpkg);
 		switch(did)
 		{
@@ -80,8 +77,6 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 			default :;
 		}
 
-//		gettimeofday(&tv,NULL);
-//		printf("action: end create thread %d.%d\n",tv.tv_sec,tv.tv_usec);
 	}
 
 	return 0;
