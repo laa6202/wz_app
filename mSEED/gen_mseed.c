@@ -21,8 +21,12 @@ int GenMSeed(int did,int ch,pRAWALL prawAll,const char * fn){
 	
 	FILE * fid = fopen(fn,"wb");
 	fclose(fid);	
+
+	int i=0;
 	while(end == 0) 
+//	for(;i<170;)
 	{
+		i++;
 		GenPack(fn,prawAll,did,ch);
 		end = EofPack(prawAll,did,ch);	
 	}
@@ -51,10 +55,13 @@ int GenPack(const char *fn,pRAWALL prawAll,int did,int ch){
 
 //	gettimeofday(&tv,NULL);
 //	printf("GenPack ch=%d: after Gen : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
+
 	fid = fopen(fn,"rb+");
 	UpdateHead(fid,prawAll,did,ch,pos_sof);
 	UpdateFrm0(fid,prawAll,did,ch,pos_sof);
 	fclose(fid);
+
+
 //	gettimeofday(&tv,NULL);
 //	printf("GenPack ch=%d: after update : %d.%d\n",ch,tv.tv_sec,tv.tv_usec);
 
@@ -68,6 +75,8 @@ int EofPack(pRAWALL prawAll,int did,int ch){
 	if(ch==0) pos_sof = prawAll->praw[did]->pos_chx;
 	else if(ch==1) pos_sof = prawAll->praw[did]->pos_chy;
 	else if(ch==2) pos_sof = prawAll->praw[did]->pos_chz;
+
+//	printf("!!!!!!!------- pos_sof = %d ------\n",pos_sof);
 
 	if(pos_sof >= len) {
 		if(ch==0) prawAll->praw[did]->pos_chx = 0;

@@ -51,7 +51,9 @@ int action(CFG cfg,SPI cSPI,SPI pSPI,pKEY pkey,int sock,pRAWALL prawAll,pCFGALL 
 		
 		if( BufInitSeek(wzpkg) == 1)
 			return 0;
+
 		int did = BufWZPKG2Raw(prawAll,wzpkg);
+
 		switch(did)
 		{
 			case 1 : MainMSeed(did,prawAll,*pcfgAll); break;
